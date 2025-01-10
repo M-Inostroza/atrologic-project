@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: c8ac3b950cdb1ea48be4884b760e3e69
+guid: 64dad3c2347892e42bc7f206554a7db8
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 3218868628991129027
-    second: Test Room - Power Generator_0
+      213: 8394853493387625746
+    second: Test Room - Workshop_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -97,19 +97,6 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
     buildTarget: Android
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -139,7 +126,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Test Room - Power Generator_0
+      name: Test Room - Workshop_0
       rect:
         serializedVersion: 2
         x: 0
@@ -154,8 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 3c53aa9b6f7bbac20800000000000000
-      internalID: 3218868628991129027
+      spriteID: 21501de36c2808470800000000000000
+      internalID: 8394853493387625746
       vertices: []
       indices: 
       edges: []
@@ -173,8 +160,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      Test Room - Power Generator_0: 3218868628991129027
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
