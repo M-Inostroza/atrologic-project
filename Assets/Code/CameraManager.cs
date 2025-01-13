@@ -45,20 +45,27 @@ public class CameraManager : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             RaycastHit2D hit = Physics2D.Raycast(mainCamera.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+
             if (!isZoomed)
             {
                 if (hit.collider != null)
                 {
+                    string roomName = hit.collider.name;
                     // Zoom to the clicked object's position
                     Vector3 targetPosition = new Vector3(hit.collider.transform.position.x, hit.collider.transform.position.y, mainCamera.transform.position.z);
                     transform.DOMove(targetPosition, zoomSpeed).SetEase(Ease.OutCirc);
                     mainCamera.DOOrthoSize(2.5f, zoomSpeed);
                     isZoomed = true;
+
+                    RoomEvents.ToggleRoom(roomName, true);
                 }
             } else
             {
+                string roomName = hit.collider.name;
                 mainCamera.DOOrthoSize(5.5f, zoomSpeed);
                 isZoomed = false;
+
+                RoomEvents.ToggleRoom(roomName, false);
             }
         }
     }
