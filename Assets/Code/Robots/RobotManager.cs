@@ -2,8 +2,16 @@ using UnityEngine;
 
 public class RobotManager : MonoBehaviour
 {
-    public RobotModel[] robots = new RobotModel[3]; // Always 3 slots
-    public RobotModel activeRobot; // The currently active robot
+    [SerializeField]
+    private RobotModel[] robots = new RobotModel[3]; // Always 3 slots
+    
+    private static RobotModel activeRobot;
+
+    public static RobotModel ActiveRobot
+    {
+        get { return activeRobot; }
+        private set { activeRobot = value; }
+    }
 
     private void Start()
     {
