@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   robotName: Second
   icon: {fileID: 0}
-  prefab: {fileID: 0}
+  prefab: {fileID: 811722250827107503, guid: 7f115cd99390fd54f8d25d9d2686933f, type: 3}
   currentHP: 0
   currentPower: 0
   baseHP: 0
