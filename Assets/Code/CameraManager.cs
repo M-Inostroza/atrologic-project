@@ -8,6 +8,7 @@ public class CameraManager : MonoBehaviour
     private float zoomSpeed = 0.8f;
 
     private bool isZoomed;
+    private static bool canMove;
 
     private Camera mainCamera;
 
@@ -26,17 +27,20 @@ public class CameraManager : MonoBehaviour
 
     private void HandleMouseDrag()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (CanMove)
         {
-            dragOrigin = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        }
+            if (Input.GetMouseButtonDown(0))
+            {
+                dragOrigin = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            }
 
-        if (Input.GetMouseButton(0))
-        {
-            Vector3 difference = dragOrigin - Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            mainCamera.transform.position += difference * dragSpeed;
+            if (Input.GetMouseButton(0))
+            {
+                Vector3 difference = dragOrigin - Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                mainCamera.transform.position += difference * dragSpeed;
 
-            dragOrigin = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                dragOrigin = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            }
         }
     }
 
@@ -59,14 +63,23 @@ public class CameraManager : MonoBehaviour
 
                     RoomEvents.ToggleRoom(roomName, true);
                 }
-            } else
-            {
-                string roomName = hit.collider.name;
-                mainCamera.DOOrthoSize(5.5f, zoomSpeed);
-                isZoomed = false;
-
-                RoomEvents.ToggleRoom(roomName, false);
             }
         }
+    }
+
+    public void ZoomOut()
+    {
+        Vector3 targetPosition = new Vector3(0, 0, mainCamera.transform.position.z);
+        transform.DOMove(targetPosition, zoomSpeed).SetEase(Ease.OutCirc);
+        mainCamera.DOOrthoSize(5f, zoomSpeed);
+        isZoomed = false;
+    }
+
+
+    // G&S
+    public static bool CanMove
+    {
+        get { return canMove; }
+        set { canMove = value; }
     }
 }
