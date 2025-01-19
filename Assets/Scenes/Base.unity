@@ -2831,8 +2831,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1956382933}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.54071426}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -3852,6 +3852,55 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &805921268
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 805921270}
+  - component: {fileID: 805921269}
+  m_Layer: 0
+  m_Name: Robot Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &805921269
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 805921268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a89a81919fc1ec468b434d6c14c5010, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  robots:
+  - {fileID: 11400000, guid: 7a467ecaa21f3ca40b2532b42b7e9876, type: 2}
+  - {fileID: 11400000, guid: 71041f4e4e34cd64ca8dd90870c2a914, type: 2}
+  - {fileID: 11400000, guid: 3bbea44c3e2a8fd42b67d79f7a2af8df, type: 2}
+  activeRobot: {fileID: 11400000, guid: 7a467ecaa21f3ca40b2532b42b7e9876, type: 2}
+--- !u!4 &805921270
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 805921268}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &819022542
 GameObject:
   m_ObjectHideFlags: 0
@@ -5614,13 +5663,14 @@ GameObject:
   - component: {fileID: 1256677855}
   - component: {fileID: 1256677854}
   - component: {fileID: 1256677853}
+  - component: {fileID: 1256677856}
   m_Layer: 5
   m_Name: Workshop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1256677852
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5706,6 +5756,18 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &1256677856
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1256677851}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 205ed980e05e1db4bacd1cdb2db003af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1263691448
 GameObject:
   m_ObjectHideFlags: 0
@@ -9479,3 +9541,4 @@ SceneRoots:
   - {fileID: 2084158528}
   - {fileID: 1956457249}
   - {fileID: 770728275}
+  - {fileID: 805921270}
