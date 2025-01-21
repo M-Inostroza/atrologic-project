@@ -3881,10 +3881,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a89a81919fc1ec468b434d6c14c5010, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  robots:
-  - {fileID: 11400000, guid: 7a467ecaa21f3ca40b2532b42b7e9876, type: 2}
-  - {fileID: 11400000, guid: 71041f4e4e34cd64ca8dd90870c2a914, type: 2}
-  - {fileID: 11400000, guid: 3bbea44c3e2a8fd42b67d79f7a2af8df, type: 2}
+  robotModel: {fileID: 11400000, guid: 7a467ecaa21f3ca40b2532b42b7e9876, type: 2}
 --- !u!4 &805921270
 Transform:
   m_ObjectHideFlags: 0
