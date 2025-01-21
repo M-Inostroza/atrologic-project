@@ -2,30 +2,26 @@ using UnityEngine;
 
 public class RobotManager : MonoBehaviour
 {
-    [SerializeField]
-    private RobotModel[] robots = new RobotModel[3]; // Always 3 slots
-    
-    private static RobotModel activeRobot;
+    public RobotModel robotModel;
 
-    public static RobotModel ActiveRobot
+    private GameObject robotInstance;
+
+    void Start()
     {
-        get { return activeRobot; }
-        private set { activeRobot = value; }
+        // Instantiate the robot prefab
+        robotInstance = Instantiate(robotModel.prefab);
+
+        // Initialize attachment points
+        robotModel.InitializeAttachmentPoints(robotInstance);
     }
 
-    private void Start()
+    public void AttachPartToRobot(Part part, int attachmentPointIndex)
     {
-        if (robots.Length > 0)
-        {
-            SetActiveRobot(0); // Default to the first robot
-        }
+        robotModel.AttachPart(part, attachmentPointIndex);
     }
 
-    public void SetActiveRobot(int index)
+    public void DetachPartFromRobot(Part part)
     {
-        if (index < 0 || index >= robots.Length) return;
-
-        activeRobot = robots[index];
-        Debug.Log($"Active robot is now: {activeRobot.robotName}");
+        robotModel.DetachPart(part);
     }
 }
