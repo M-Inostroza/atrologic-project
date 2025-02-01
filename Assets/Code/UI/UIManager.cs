@@ -34,7 +34,7 @@ public class UIManager : MonoBehaviour
         switch (roomName)
         {
             case "Workshop":
-                Debug.Log("Workshop In");
+                Debug.Log(UI_panels[0]);
                 UI_panels[0].gameObject.SetActive(true);
                 break;
             default:

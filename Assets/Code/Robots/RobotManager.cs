@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class RobotManager : MonoBehaviour
 {
@@ -6,13 +7,19 @@ public class RobotManager : MonoBehaviour
 
     private GameObject robotInstance;
 
-    void Start()
+    public void ShowPreview(float x, float y)
     {
-        // Instantiate the robot prefab
-        robotInstance = Instantiate(robotModel.prefab);
+        Debug.Log("Showing robot preview");
+        Vector3 position = new Vector3(x, y, 0);
+        robotInstance = Instantiate(robotModel.prefab, position, Quaternion.identity);
 
         // Initialize attachment points
         robotModel.InitializeAttachmentPoints(robotInstance);
+    }
+
+    public void HidePreview()
+    {
+        Destroy(robotInstance);
     }
 
     public void AttachPartToRobot(Part part, int attachmentPointIndex)
