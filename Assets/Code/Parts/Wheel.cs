@@ -6,6 +6,4 @@ public class Wheel : Part
     {
         partType = PartType.Ground; 
     }
-
-
 }
