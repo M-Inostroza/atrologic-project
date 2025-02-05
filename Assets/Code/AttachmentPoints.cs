@@ -1,8 +1,19 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class AttachmentPoints : MonoBehaviour
 {
     public Transform[] attachmentPoints;
+    private Dictionary<Transform, bool> attachmentPointStatus;
+
+    private void Awake()
+    {
+        attachmentPointStatus = new Dictionary<Transform, bool>();
+        foreach (Transform attachmentPoint in attachmentPoints)
+        {
+            attachmentPointStatus[attachmentPoint] = false; // Initialize all attachment points as unoccupied
+        }
+    }
 
     public Transform GetAttachmentPoint(int index)
     {
@@ -17,11 +28,14 @@ public class AttachmentPoints : MonoBehaviour
 
         foreach (Transform attachmentPoint in attachmentPoints)
         {
-            float distance = Vector2.Distance(position, attachmentPoint.position);
-            if (distance < closestDistance)
+            if (!attachmentPointStatus[attachmentPoint]) // Check if the attachment point is unoccupied
             {
-                closestDistance = distance;
-                closestPoint = attachmentPoint;
+                float distance = Vector2.Distance(position, attachmentPoint.position);
+                if (distance < closestDistance)
+                {
+                    closestDistance = distance;
+                    closestPoint = attachmentPoint;
+                }
             }
         }
 
@@ -30,17 +44,28 @@ public class AttachmentPoints : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Wheel wheel = other.GetComponent<Wheel>();
-        if (wheel != null)
+        Part part = other.GetComponent<Part>();
+        if (part != null)
         {
             foreach (Transform attachmentPoint in attachmentPoints)
             {
-                if (Vector2.Distance(wheel.transform.position, attachmentPoint.position) < 0.5f) // Ajusta el umbral según sea necesario
+                if (!attachmentPointStatus[attachmentPoint] && Vector2.Distance(part.transform.position, attachmentPoint.position) < 0.5f) // Adjust the threshold as needed
                 {
-                    wheel.Attach(attachmentPoint);
+                    part.Attach(attachmentPoint);
+                    attachmentPointStatus[attachmentPoint] = true; // Mark the attachment point as occupied
+                    Debug.Log($"Part {part.name} attached to {attachmentPoint.name}");
                     break;
                 }
             }
+        }
+    }
+
+    public void DetachPart(Transform attachmentPoint)
+    {
+        if (attachmentPointStatus.ContainsKey(attachmentPoint))
+        {
+            attachmentPointStatus[attachmentPoint] = false; // Mark the attachment point as unoccupied
+            Debug.Log($"Attachment point {attachmentPoint.name} is now unoccupied");
         }
     }
 }

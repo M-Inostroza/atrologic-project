@@ -9,7 +9,6 @@ public class RobotManager : MonoBehaviour
 
     public void ShowPreview(float x, float y)
     {
-        Debug.Log("Showing robot preview");
         Vector3 position = new Vector3(x, y, 0);
         robotInstance = Instantiate(robotModel.prefab, position, Quaternion.identity);
 

@@ -23,6 +23,7 @@ public class CameraManager : MonoBehaviour
     {
         HandleMouseDrag();
         HandleMouseClick();
+        //DebugMouseOver();
     }
 
     private void HandleMouseDrag()
@@ -52,7 +53,7 @@ public class CameraManager : MonoBehaviour
 
             if (!isZoomed)
             {
-                if (hit.collider != null)
+                if (hit.collider != null && hit.collider.CompareTag("Room"))
                 {
                     string roomName = hit.collider.name;
                     // Zoom to the clicked object's position
@@ -73,6 +74,19 @@ public class CameraManager : MonoBehaviour
         transform.DOMove(targetPosition, zoomSpeed).SetEase(Ease.OutCirc);
         mainCamera.DOOrthoSize(5f, zoomSpeed);
         isZoomed = false;
+    }
+
+    private void DebugMouseOver()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(mainCamera.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+        if (hit.collider != null)
+        {
+            Debug.Log("Mouse is over: " + hit.collider.name);
+        }
+        else
+        {
+            Debug.Log("Mouse is over: nothing");
+        }
     }
 
 
