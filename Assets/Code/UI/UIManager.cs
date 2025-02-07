@@ -11,7 +11,6 @@ public class UIManager : MonoBehaviour
         foreach (Transform child in gameObject.transform)
         {
             UI_panels.Add(child);
-            Debug.Log($"Panel added to list: {child.name}");
         }
     }
 
@@ -34,7 +33,6 @@ public class UIManager : MonoBehaviour
         switch (roomName)
         {
             case "Workshop":
-                Debug.Log(UI_panels[0]);
                 UI_panels[0].gameObject.SetActive(true);
                 break;
             default:
@@ -49,7 +47,6 @@ public class UIManager : MonoBehaviour
         switch (roomName)
         {
             case "Workshop":
-                Debug.Log("Workshop out");
                 UI_panels[0].gameObject.SetActive(false);
                 break;
             default:

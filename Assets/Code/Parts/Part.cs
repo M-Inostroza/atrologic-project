@@ -1,3 +1,4 @@
+using System.Transactions;
 using UnityEngine;
 
 public enum PartType
@@ -8,18 +9,68 @@ public enum PartType
     // Add other part types as needed
 }
 
+public class PartData
+{
+    public string name;
+    public Vector3 localPosition;
+    public Quaternion localRotation;
+    public bool isAttached;
+    public string attachmentPointName;
+}
+
 public class Part : MonoBehaviour
 {
     public PartType partType;
     public Transform attachmentPoint;
     public bool isAttached;
 
+    Core core;
+
     protected bool isDragging = false;
     private Vector3 offset;
 
     public void Start()
     {
+        core = FindFirstObjectByType<Core>();
         isAttached = false;
+    }
+
+    public void Update()
+    {
+        if (isDragging)
+        {
+            transform.position = GetMouseWorldPosition() + offset;
+        }
+    }
+
+    public void OnMouseDown()
+    {
+        isDragging = true;
+
+        if (isAttached)
+        {
+            if (core != null)
+            {
+                Detach();
+            }
+        } else
+        {
+            offset = transform.position - GetMouseWorldPosition();
+        }
+    }
+
+    public void OnMouseUp()
+    {
+        isDragging = false;
+
+        if (core != null)
+        {
+            Transform closestAttachmentPoint = core.GetClosestAttachmentPoint(transform.position);
+            if (closestAttachmentPoint != null)
+            {
+                Attach(closestAttachmentPoint);
+            }
+        }
     }
 
     public void Attach(Transform newAttachmentPoint)
@@ -29,53 +80,13 @@ public class Part : MonoBehaviour
         transform.localPosition = Vector3.zero;
         transform.localRotation = Quaternion.identity;
         isAttached = true;
-        Debug.Log($"Part {name} attached to {attachmentPoint.name}");
     }
 
     public void Detach()
     {
-        if (attachmentPoint != null)
-        {
-            AttachmentPoints attachmentPoints = attachmentPoint.GetComponentInParent<AttachmentPoints>();
-            if (attachmentPoints != null)
-            {
-                attachmentPoints.DetachPart(attachmentPoint);
-            }
-        }
+        core.SetAttachmentPointStatus(transform.parent.transform, false);
         transform.SetParent(null);
-        attachmentPoint = null;
         isAttached = false;
-        Debug.Log($"Part {name} detached");
-    }
-
-    public void OnMouseDown()
-    {
-        isDragging = true;
-        offset = transform.position - GetMouseWorldPosition();
-    }
-
-    public void OnMouseUp()
-    {
-        isDragging = false;
-
-        // Find the closest attachment point and snap to it
-        AttachmentPoints attachmentPoints = FindObjectOfType<AttachmentPoints>();
-        if (attachmentPoints != null)
-        {
-            Transform closestAttachmentPoint = attachmentPoints.GetClosestAttachmentPoint(transform.position);
-            if (closestAttachmentPoint != null)
-            {
-                Attach(closestAttachmentPoint);
-            }
-        }
-    }
-
-    public void Update()
-    {
-        if (isDragging)
-        {
-            transform.position = GetMouseWorldPosition() + offset;
-        }
     }
 
     private Vector3 GetMouseWorldPosition()

@@ -76,19 +76,6 @@ public class CameraManager : MonoBehaviour
         isZoomed = false;
     }
 
-    private void DebugMouseOver()
-    {
-        RaycastHit2D hit = Physics2D.Raycast(mainCamera.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
-        if (hit.collider != null)
-        {
-            Debug.Log("Mouse is over: " + hit.collider.name);
-        }
-        else
-        {
-            Debug.Log("Mouse is over: nothing");
-        }
-    }
-
 
     // G&S
     public static bool CanMove

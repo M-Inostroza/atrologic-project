@@ -38,23 +38,10 @@ public class RobotModel : ScriptableObject
     // Initialize attachment points at runtime
     public void InitializeAttachmentPoints(GameObject robotInstance)
     {
-        AttachmentPoints attachmentPointsComponent = robotInstance.GetComponent<AttachmentPoints>();
-        if (attachmentPointsComponent != null)
+        Core corePoints = robotInstance.GetComponent<Core>();
+        if (corePoints != null)
         {
-            attachmentPoints = attachmentPointsComponent.attachmentPoints;
+            attachmentPoints = corePoints.attachmentPoints;
         }
-    }
-
-    // Methods to manage parts
-    public void AttachPart(Part part, int attachmentPointIndex)
-    {
-        if (attachmentPoints == null || attachmentPointIndex < 0 || attachmentPointIndex >= attachmentPoints.Length) return;
-
-        part.Attach(attachmentPoints[attachmentPointIndex]);
-    }
-
-    public void DetachPart(Part part)
-    {
-        part.Detach();
     }
 }
