@@ -99,10 +99,10 @@ public class RobotManager : MonoBehaviour
             Transform parent = FindChildByName(robotInstance.transform, data.attachmentPointName);
             if (parent != null)
             {
-                Debug.Log($"Loading part '{data.name}' to '{parent.name}'");
-                string cleanName = data.name.Replace("(Clone)", "").Trim(); // Remove "(Clone)" from the name
+                string cleanName = data.name.Replace("(Clone)", "").Trim();
                 Debug.Log($"Loading part clean '{cleanName}' to '{parent.name}'");
-                GameObject partPrefab = FindPartPrefabByName(cleanName); // Find the correct prefab
+
+                GameObject partPrefab = FindPartPrefabByName(cleanName);
                 if (partPrefab != null)
                 {
                     GameObject newPart = Instantiate(partPrefab, parent);
