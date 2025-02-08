@@ -8,6 +8,22 @@ public class RobotManager : MonoBehaviour
 
     [SerializeField] private List<GameObject> availableParts;
 
+    public void SpawnRobot(Transform spawnPoint)
+    {
+        if (robotInstance != null) return;
+
+        // Verificar si hay un estado guardado del robot
+        if (ES3.KeyExists("RobotPosition"))
+        {
+            LoadRobotState(spawnPoint); // Cargar el estado del robot desde ES3
+            ActivateRigidbody();
+        }
+        else
+        {
+            Debug.Log("No robot");
+        }
+    }
+
     public void ShowPreview(float x, float y)
     {
         // Check if a robot is already saved
@@ -47,7 +63,7 @@ public class RobotManager : MonoBehaviour
         Debug.Log("Robot state saved!");
     }
 
-    public void LoadRobotState()
+    public void LoadRobotState(Transform spawnPosition = null)
     {
         if (!ES3.KeyExists("RobotPosition")) return;
 
@@ -57,7 +73,12 @@ public class RobotManager : MonoBehaviour
         Vector3 position = ES3.Load<Vector3>("RobotPosition");
 
         // Instantiate the saved prefab with modifications
-        robotInstance = Instantiate(robotModel.prefab, position, Quaternion.identity);
+        if (spawnPosition != null) {
+            robotInstance = Instantiate(robotModel.prefab, spawnPosition.position, Quaternion.identity);
+        } else
+        {
+            robotInstance = Instantiate(robotModel.prefab, position, Quaternion.identity);
+        }
         robotModel.InitializeAttachmentPoints(robotInstance);
 
         LoadParts();
@@ -145,5 +166,17 @@ public class RobotManager : MonoBehaviour
                 return prefab;
         }
         return null;
+    }
+
+    private void ActivateRigidbody()
+    {
+        if (robotInstance != null)
+        {
+            Rigidbody2D[] rigidbodies = robotInstance.GetComponentsInChildren<Rigidbody2D>();
+            foreach (Rigidbody2D rb2D in rigidbodies)
+            {
+                rb2D.simulated = true; // Activar la simulación de todos los Rigidbody2D
+            }
+        }
     }
 }
