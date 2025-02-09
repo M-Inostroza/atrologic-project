@@ -12,10 +12,9 @@ public class RobotManager : MonoBehaviour
     {
         if (robotInstance != null) return;
 
-        // Verificar si hay un estado guardado del robot
         if (ES3.KeyExists("RobotPosition"))
         {
-            LoadRobotState(spawnPoint); // Cargar el estado del robot desde ES3
+            LoadRobotState(spawnPoint); // Load Robot from ES3
             ActivateRigidbody();
         }
         else
@@ -58,6 +57,7 @@ public class RobotManager : MonoBehaviour
         ES3.Save("RobotPosition", robotInstance.transform.position);
         ES3.Save("RobotPrefabPath", robotModel.prefab.name); // Save prefab reference
 
+
         SaveParts();
 
         Debug.Log("Robot state saved!");
@@ -90,6 +90,14 @@ public class RobotManager : MonoBehaviour
     {
         List<PartData> attachedParts = new List<PartData>();
 
+        Core core = robotInstance.GetComponentInChildren<Core>();
+
+        if (core != null)
+        {
+            var attachmentPointsStatus = core.GetAttachmentPointsStatus();
+            ES3.Save("AttachmentPointsStatus", attachmentPointsStatus);
+        }
+
         foreach (Transform point in robotInstance.transform)
         {
             foreach (Transform part in point) // Go one level deeper
@@ -121,7 +129,6 @@ public class RobotManager : MonoBehaviour
             if (parent != null)
             {
                 string cleanName = data.name.Replace("(Clone)", "").Trim();
-                Debug.Log($"Loading part clean '{cleanName}' to '{parent.name}'");
 
                 GameObject partPrefab = FindPartPrefabByName(cleanName);
                 if (partPrefab != null)
@@ -160,7 +167,7 @@ public class RobotManager : MonoBehaviour
 
     private GameObject FindPartPrefabByName(string name)
     {
-        foreach (GameObject prefab in availableParts) // Make sure availableParts is a list of prefabs
+        foreach (GameObject prefab in availableParts)
         {
             if (prefab.name == name)
                 return prefab;
@@ -172,10 +179,16 @@ public class RobotManager : MonoBehaviour
     {
         if (robotInstance != null)
         {
+            Rigidbody2D robotRb2D = robotInstance.GetComponent<Rigidbody2D>();
+            if (robotRb2D == null)
+            {
+                robotRb2D = robotInstance.AddComponent<Rigidbody2D>();
+            }
+
             Rigidbody2D[] rigidbodies = robotInstance.GetComponentsInChildren<Rigidbody2D>();
             foreach (Rigidbody2D rb2D in rigidbodies)
             {
-                rb2D.simulated = true; // Activar la simulación de todos los Rigidbody2D
+                rb2D.simulated = true;
             }
         }
     }

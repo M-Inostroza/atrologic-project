@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
@@ -9,8 +10,12 @@ public class LevelManager : MonoBehaviour
 
     private void Start()
     {
-        robotManager = FindFirstObjectByType<RobotManager>();
+        if (SceneManager.GetActiveScene().name == "Level")
+        {
+            robotManager = FindFirstObjectByType<RobotManager>();
 
-        robotManager.SpawnRobot(spawnPoint);
+            robotManager.SpawnRobot(spawnPoint);
+            RobotCamera.FindRobot();
+        }
     }
 }

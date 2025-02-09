@@ -53,7 +53,8 @@ public class Part : MonoBehaviour
             {
                 Detach();
             }
-        } else
+        }
+        else
         {
             offset = transform.position - GetMouseWorldPosition();
         }
@@ -84,7 +85,7 @@ public class Part : MonoBehaviour
 
     public void Detach()
     {
-        core.SetAttachmentPointStatus(transform.parent.transform, false);
+        core.SetAttachmentPointStatus(transform.parent.transform, false); // TODO
         transform.SetParent(null);
         isAttached = false;
     }

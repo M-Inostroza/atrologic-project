@@ -12,12 +12,16 @@ public class Wheel : Part
         if (SceneManager.GetActiveScene().name == "Level")
         {
             // Agregar un Rigidbody2D si no existe
-            if (GetComponent<Rigidbody2D>() == null)
+            rb2D = GetComponent<Rigidbody2D>();
+            if (rb2D == null)
             {
-                gameObject.AddComponent<Rigidbody2D>();
+                rb2D = gameObject.AddComponent<Rigidbody2D>();
             }
 
-            Core core = FindObjectOfType<Core>();
+            // Eliminate constrains
+            rb2D.constraints = RigidbodyConstraints2D.None;
+
+            Core core = FindFirstObjectByType<Core>();
             if (core != null)
             {
                 Rigidbody2D coreRb2D = core.GetComponent<Rigidbody2D>();
@@ -30,7 +34,7 @@ public class Wheel : Part
                 WheelJoint2D wheelJoint = core.gameObject.AddComponent<WheelJoint2D>();
 
                 // Configurar el WheelJoint2D
-                wheelJoint.connectedBody = GetComponent<Rigidbody2D>();
+                wheelJoint.connectedBody = rb2D;
                 wheelJoint.anchor = core.transform.InverseTransformPoint(transform.parent.position);
             }
         }
@@ -38,16 +42,17 @@ public class Wheel : Part
 
     private void Update()
     {
-        RotateWheel(5);
+        base.Update();
+
+        RotateWheel(0.2f);
     }
 
 
     public void RotateWheel(float speed)
     {
-        Debug.Log("Rotando");
         if (rb2D != null)
         {
-            rb2D.AddTorque(-speed); // Aplica un torque negativo para rotar en el sentido de las agujas del reloj
+            rb2D.AddTorque(-speed);
         }
     }
 }

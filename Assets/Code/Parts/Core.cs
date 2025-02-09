@@ -8,11 +8,26 @@ public class Core : MonoBehaviour
 
     private void Awake()
     {
-        // Inicializa el diccionario para rastrear el estado de los puntos de unión
         attachmentPointStatus = new Dictionary<Transform, bool>();
-        foreach (Transform attachmentPoint in attachmentPoints)
+
+        if (ES3.KeyExists("AttachmentPointsStatus"))
         {
-            attachmentPointStatus[attachmentPoint] = false; // Inicializa todos los puntos de unión como desocupados
+            var savedStatus = ES3.Load<Dictionary<string, bool>>("AttachmentPointsStatus");
+            foreach (Transform attachmentPoint in attachmentPoints)
+            {
+                if (savedStatus.ContainsKey(attachmentPoint.name))
+                {
+                    attachmentPointStatus[attachmentPoint] = savedStatus[attachmentPoint.name];
+                }
+                else
+                {
+                    attachmentPointStatus[attachmentPoint] = false;
+                }
+            }
+        }
+        else
+        {
+            ResetPointStatus();
         }
     }
 
@@ -42,7 +57,7 @@ public class Core : MonoBehaviour
 
         if (closestPoint != null)
         {
-            attachmentPointStatus[closestPoint] = true; // Marca el punto de unión como ocupado
+            attachmentPointStatus[closestPoint] = true;
         }
 
         return closestPoint;
@@ -51,5 +66,31 @@ public class Core : MonoBehaviour
     public void SetAttachmentPointStatus(Transform attachmentPoint, bool status)
     {
         attachmentPointStatus[attachmentPoint] = status;
+    }
+
+    void ResetPointStatus()
+    {
+        foreach (Transform attachmentPoint in attachmentPoints)
+        {
+            attachmentPointStatus[attachmentPoint] = false;
+        }
+    }
+
+    public Dictionary<string, bool> GetAttachmentPointsStatus()
+    {
+        Dictionary<string, bool> status = new Dictionary<string, bool>();
+        foreach (var entry in attachmentPointStatus)
+        {
+            status[entry.Key.name] = entry.Value;
+        }
+        return status;
+    }
+
+    public void DebugAttachmentPointsStatus()
+    {
+        foreach (var entry in attachmentPointStatus)
+        {
+            Debug.Log($"Attachment Point: {entry.Key.name}, Status: {(entry.Value ? "Occupied" : "Free")}");
+        }
     }
 }
