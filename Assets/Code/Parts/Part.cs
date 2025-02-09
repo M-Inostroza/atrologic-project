@@ -85,7 +85,7 @@ public class Part : MonoBehaviour
 
     public void Detach()
     {
-        core.SetAttachmentPointStatus(transform.parent.transform, false); // TODO
+        core.SetAttachmentPointStatus(transform.parent.transform, false);
         transform.SetParent(null);
         isAttached = false;
     }

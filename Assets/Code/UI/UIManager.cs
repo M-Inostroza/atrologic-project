@@ -29,11 +29,14 @@ public class UIManager : MonoBehaviour
     private void ShowRoomUI(string roomName)
     {
         CameraManager.CanMove = false;
-
+        Debug.Log("Showing UI for room: " + roomName);
         switch (roomName)
         {
             case "Workshop":
                 UI_panels[0].gameObject.SetActive(true);
+                break;
+            case "Level selector":
+                UI_panels[1].gameObject.SetActive(true);
                 break;
             default:
                 break;
@@ -48,6 +51,9 @@ public class UIManager : MonoBehaviour
         {
             case "Workshop":
                 UI_panels[0].gameObject.SetActive(false);
+                break;
+            case "Level selector":
+                UI_panels[1].gameObject.SetActive(false);
                 break;
             default:
                 break;

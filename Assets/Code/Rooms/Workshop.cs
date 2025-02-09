@@ -11,7 +11,6 @@ public class Workshop : MonoBehaviour
 
     [SerializeField] private BoxCollider2D workshopCollider;
 
-
     private void OnEnable()
     {
         robotManager.ShowPreview(previewX, previewY);

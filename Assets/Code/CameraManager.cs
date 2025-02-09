@@ -23,7 +23,6 @@ public class CameraManager : MonoBehaviour
     {
         HandleMouseDrag();
         HandleMouseClick();
-        //DebugMouseOver();
     }
 
     private void HandleMouseDrag()
