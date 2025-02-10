@@ -29,7 +29,6 @@ public class UIManager : MonoBehaviour
     private void ShowRoomUI(string roomName)
     {
         CameraManager.CanMove = false;
-        Debug.Log("Showing UI for room: " + roomName);
         switch (roomName)
         {
             case "Workshop":

@@ -34,7 +34,7 @@ public class Part : MonoBehaviour
     public void Start()
     {
         core = FindFirstObjectByType<Core>();
-        isAttached = false;
+        CheckInitialAttachment();
     }
 
     public void Update()
@@ -42,6 +42,18 @@ public class Part : MonoBehaviour
         if (isDragging)
         {
             transform.position = GetMouseWorldPosition() + offset;
+        }
+    }
+
+    public void CheckInitialAttachment()
+    {
+        if (transform.parent != null && transform.parent.CompareTag("Point"))
+        {
+            isAttached = true;
+        }
+        else
+        {
+            isAttached = false;
         }
     }
 
@@ -91,10 +103,9 @@ public class Part : MonoBehaviour
                 {
                     if (IsOverUIElement())
                     {
-                        Debug.Log("Wheel is over the recycle icon!");
                         Destroy(gameObject);
                     }
-                    Debug.Log("Part is too far from the closest attachment point, staying where dropped.");
+                    Debug.Log("Dropped.");
                 }
             }
         }
@@ -111,6 +122,7 @@ public class Part : MonoBehaviour
 
     public void Detach()
     {
+        Debug.Log("is detaching");
         core.SetAttachmentPointStatus(transform.parent.transform, false);
         transform.SetParent(null);
         isAttached = false;
