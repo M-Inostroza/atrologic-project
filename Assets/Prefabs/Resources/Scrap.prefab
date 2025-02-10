@@ -137,3 +137,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4705184744c624247928c28117dd1184, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resourceName: Scrap

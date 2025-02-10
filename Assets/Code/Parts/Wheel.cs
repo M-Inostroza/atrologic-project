@@ -1,17 +1,29 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class Wheel : Part
 {
     private Rigidbody2D rb2D;
+    private GameManager gameManager;
     private void Awake()
     {
         partType = PartType.Ground;
+        gameManager = FindFirstObjectByType<GameManager>();
 
-        // TODO Cambiar a state machine from gamemanager
-        if (SceneManager.GetActiveScene().name == "Level")
+        SetWheel();
+    }
+
+    private void Update()
+    {
+        base.Update();
+
+        RotateWheel(0.2f);
+    }
+
+    void SetWheel()
+    {
+        if (gameManager.GetCurrentState() == GameManager.GameState.Level)
         {
-            // Agregar un Rigidbody2D si no existe
+            // Add Rigidbody2D
             rb2D = GetComponent<Rigidbody2D>();
             if (rb2D == null)
             {
@@ -30,24 +42,15 @@ public class Wheel : Part
                     coreRb2D = core.gameObject.AddComponent<Rigidbody2D>();
                 }
 
-                // Crear un nuevo WheelJoint2D para cada Wheel
+                // Create WheelJoint2D for each Wheel
                 WheelJoint2D wheelJoint = core.gameObject.AddComponent<WheelJoint2D>();
 
-                // Configurar el WheelJoint2D
+                // Set WheelJoint2D
                 wheelJoint.connectedBody = rb2D;
                 wheelJoint.anchor = core.transform.InverseTransformPoint(transform.parent.position);
             }
         }
     }
-
-    private void Update()
-    {
-        base.Update();
-
-        RotateWheel(0.2f);
-    }
-
-
     public void RotateWheel(float speed)
     {
         if (rb2D != null)

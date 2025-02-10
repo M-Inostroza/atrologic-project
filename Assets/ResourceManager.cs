@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class ResourceManager : MonoBehaviour
 {
+    LevelUIManager levelUIManager;
     private int scrap;
 
     public int Scrap
@@ -20,20 +21,26 @@ public class ResourceManager : MonoBehaviour
         Resource.OnResourceCollected -= HandleResourceCollected;
     }
 
-    private void HandleResourceCollected()
+    private void HandleResourceCollected(string resourceName)
     {
-        AddScrap(1);
+        if (resourceName == "Scrap")
+        {
+            AddScrap(1);
+        }
     }
 
     private void Start()
     {
         Scrap = 0;
+        levelUIManager = FindFirstObjectByType<LevelUIManager>();
+        LoadScrap();
+        levelUIManager.UpdateScrapCounter(Scrap);
     }
 
     public void AddScrap(int amount)
     {
         Scrap += amount;
-        Debug.Log($"Scrap added: {amount}. Total Scrap: {Scrap}");
+        levelUIManager.UpdateScrapCounter(Scrap);
     }
 
     public void RemoveScrap(int amount)
@@ -41,11 +48,33 @@ public class ResourceManager : MonoBehaviour
         if (Scrap >= amount)
         {
             Scrap -= amount;
-            Debug.Log($"Scrap removed: {amount}. Total Scrap: {Scrap}");
+            levelUIManager.UpdateScrapCounter(Scrap);
         }
         else
         {
             Debug.LogWarning("Not enough Scrap to remove.");
+        }
+    }
+
+    private void OnApplicationQuit()
+    {
+        SaveScrap();
+    }
+
+    private void SaveScrap()
+    {
+        ES3.Save("Scrap", Scrap);
+    }
+
+    private void LoadScrap()
+    {
+        if (ES3.KeyExists("Scrap"))
+        {
+            Scrap = ES3.Load<int>("Scrap");
+        }
+        else
+        {
+            Scrap = 0;
         }
     }
 }

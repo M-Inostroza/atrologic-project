@@ -3,13 +3,15 @@ using System;
 
 public class Resource : MonoBehaviour
 {
-    public static event Action OnResourceCollected;
+    [SerializeField] private string resourceName;
+
+    public static event Action<string> OnResourceCollected;
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("Scrap");
-            OnResourceCollected?.Invoke();
+            OnResourceCollected?.Invoke(resourceName);
             Destroy(gameObject);
         }
     }

@@ -24,16 +24,16 @@ public class Part : MonoBehaviour
     public Transform attachmentPoint;
     public bool isAttached;
 
-    Core core;
-
     protected bool isDragging = false;
     private Vector3 offset;
 
     RectTransform recycleIcon;
+    Core core;
 
     public void Start()
     {
         core = FindFirstObjectByType<Core>();
+
         CheckInitialAttachment();
     }
 
