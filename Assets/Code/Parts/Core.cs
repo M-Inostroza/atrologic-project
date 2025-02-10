@@ -9,26 +9,7 @@ public class Core : MonoBehaviour
     private void Awake()
     {
         attachmentPointStatus = new Dictionary<Transform, bool>();
-
-        if (ES3.KeyExists("AttachmentPointsStatus"))
-        {
-            var savedStatus = ES3.Load<Dictionary<string, bool>>("AttachmentPointsStatus");
-            foreach (Transform attachmentPoint in attachmentPoints)
-            {
-                if (savedStatus.ContainsKey(attachmentPoint.name))
-                {
-                    attachmentPointStatus[attachmentPoint] = savedStatus[attachmentPoint.name];
-                }
-                else
-                {
-                    attachmentPointStatus[attachmentPoint] = false;
-                }
-            }
-        }
-        else
-        {
-            ResetPointStatus();
-        }
+        LoadAttachmentStatus();
     }
 
     public Transform GetClosestAttachmentPoint(Vector3 position)
@@ -55,12 +36,30 @@ public class Core : MonoBehaviour
             }
         }
 
-        if (closestPoint != null)
-        {
-            attachmentPointStatus[closestPoint] = true;
-        }
-
         return closestPoint;
+    }
+
+    void LoadAttachmentStatus()
+    {
+        if (ES3.KeyExists("AttachmentPointsStatus"))
+        {
+            var savedStatus = ES3.Load<Dictionary<string, bool>>("AttachmentPointsStatus");
+            foreach (Transform attachmentPoint in attachmentPoints)
+            {
+                if (savedStatus.ContainsKey(attachmentPoint.name))
+                {
+                    attachmentPointStatus[attachmentPoint] = savedStatus[attachmentPoint.name];
+                }
+                else
+                {
+                    attachmentPointStatus[attachmentPoint] = false;
+                }
+            }
+        }
+        else
+        {
+            ResetPointStatus();
+        }
     }
 
     public void SetAttachmentPointStatus(Transform attachmentPoint, bool status)
@@ -68,7 +67,7 @@ public class Core : MonoBehaviour
         attachmentPointStatus[attachmentPoint] = status;
     }
 
-    void ResetPointStatus()
+    public void ResetPointStatus()
     {
         foreach (Transform attachmentPoint in attachmentPoints)
         {

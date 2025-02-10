@@ -29,6 +29,8 @@ public class Part : MonoBehaviour
     protected bool isDragging = false;
     private Vector3 offset;
 
+    RectTransform recycleIcon;
+
     public void Start()
     {
         core = FindFirstObjectByType<Core>();
@@ -41,6 +43,14 @@ public class Part : MonoBehaviour
         {
             transform.position = GetMouseWorldPosition() + offset;
         }
+    }
+
+    private bool IsOverUIElement()
+    {
+        recycleIcon = GameObject.Find("Recycle").GetComponent<RectTransform>();
+        if (recycleIcon == null) return false;
+        Vector2 screenPosition = Camera.main.WorldToScreenPoint(transform.position);
+        return RectTransformUtility.RectangleContainsScreenPoint(recycleIcon, screenPosition);
     }
 
     public void OnMouseDown()
@@ -69,7 +79,23 @@ public class Part : MonoBehaviour
             Transform closestAttachmentPoint = core.GetClosestAttachmentPoint(transform.position);
             if (closestAttachmentPoint != null)
             {
-                Attach(closestAttachmentPoint);
+                float distance = Vector3.Distance(transform.position, closestAttachmentPoint.position);
+                float maxSnapDistance = .5f; // Set maximum snap distance
+
+                if (distance <= maxSnapDistance)
+                {
+                    Attach(closestAttachmentPoint);
+                    core.SetAttachmentPointStatus(closestAttachmentPoint, true);
+                }
+                else
+                {
+                    if (IsOverUIElement())
+                    {
+                        Debug.Log("Wheel is over the recycle icon!");
+                        Destroy(gameObject);
+                    }
+                    Debug.Log("Part is too far from the closest attachment point, staying where dropped.");
+                }
             }
         }
     }
