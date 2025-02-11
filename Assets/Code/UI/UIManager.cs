@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class UIManager : MonoBehaviour
@@ -7,11 +8,7 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
-        UI_panels = new List<Transform>();
-        foreach (Transform child in gameObject.transform)
-        {
-            UI_panels.Add(child);
-        }
+        CollectPanels();
     }
 
     private void OnEnable()
@@ -56,6 +53,16 @@ public class UIManager : MonoBehaviour
                 break;
             default:
                 break;
+        }
+    }
+
+
+    void CollectPanels()
+    {
+        UI_panels = new List<Transform>();
+        foreach (Transform child in gameObject.transform)
+        {
+            UI_panels.Add(child);
         }
     }
 }

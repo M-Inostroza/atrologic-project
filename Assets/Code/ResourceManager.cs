@@ -1,19 +1,25 @@
+using TMPro;
 using UnityEngine;
 
 public class ResourceManager : MonoBehaviour
 {
-    LevelUIManager levelUIManager;
     private int scrap;
+    private TMP_Text scrapCounter;
 
     public int Scrap
     {
         get { return scrap; }
-        private set { scrap = value; }
+        private set
+        {
+            scrap = value;
+            UpdateScrapCounter();
+        }
     }
 
     private void OnEnable()
     {
         Resource.OnResourceCollected += HandleResourceCollected;
+        LoadScrap();
     }
 
     private void OnDisable()
@@ -31,16 +37,14 @@ public class ResourceManager : MonoBehaviour
 
     private void Start()
     {
-        Scrap = 0;
-        levelUIManager = FindFirstObjectByType<LevelUIManager>();
+        scrapCounter = GameObject.Find("Scrap counter").GetComponent<TMP_Text>();
+
         LoadScrap();
-        levelUIManager.UpdateScrapCounter(Scrap);
     }
 
     public void AddScrap(int amount)
     {
         Scrap += amount;
-        levelUIManager.UpdateScrapCounter(Scrap);
     }
 
     public void RemoveScrap(int amount)
@@ -48,7 +52,6 @@ public class ResourceManager : MonoBehaviour
         if (Scrap >= amount)
         {
             Scrap -= amount;
-            levelUIManager.UpdateScrapCounter(Scrap);
         }
         else
         {
@@ -59,6 +62,14 @@ public class ResourceManager : MonoBehaviour
     private void OnApplicationQuit()
     {
         SaveScrap();
+    }
+
+    public void UpdateScrapCounter()
+    {
+        if (scrapCounter != null)
+        {
+            scrapCounter.text = Scrap.ToString();
+        }
     }
 
     private void SaveScrap()

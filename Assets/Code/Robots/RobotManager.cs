@@ -55,12 +55,9 @@ public class RobotManager : MonoBehaviour
         if (robotInstance == null) return;
 
         ES3.Save("RobotPosition", robotInstance.transform.position);
-        ES3.Save("RobotPrefabPath", robotModel.prefab.name); // Save prefab reference
-
+        ES3.Save("RobotPrefabPath", robotModel.prefab.name); // Save prefab
 
         SaveParts();
-
-        Debug.Log("Robot state saved!");
     }
 
     public void LoadRobotState(Transform spawnPosition = null)
@@ -82,8 +79,6 @@ public class RobotManager : MonoBehaviour
         robotModel.InitializeAttachmentPoints(robotInstance);
 
         LoadParts();
-
-        Debug.Log("Robot state loaded!");
     }
 
     private void SaveParts()

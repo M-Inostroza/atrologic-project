@@ -6,7 +6,6 @@ public enum PartType
     Ground,
     Air,
     Sensor,
-    // Add other part types as needed
 }
 
 public class PartData
@@ -105,7 +104,6 @@ public class Part : MonoBehaviour
                     {
                         Destroy(gameObject);
                     }
-                    Debug.Log("Dropped.");
                 }
             }
         }
@@ -122,7 +120,6 @@ public class Part : MonoBehaviour
 
     public void Detach()
     {
-        Debug.Log("is detaching");
         core.SetAttachmentPointStatus(transform.parent.transform, false);
         transform.SetParent(null);
         isAttached = false;

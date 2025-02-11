@@ -13,7 +13,22 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        currentState = GameState.Level;
+        switch (GetCurrentSceneName())
+        {
+            case "Base":
+                currentState = GameState.Base;
+                break;
+            case "Level":
+                currentState = GameState.Level;
+                break;
+            default:
+                break;
+        }
+    }
+
+    public string GetCurrentSceneName()
+    {
+        return SceneManager.GetActiveScene().name;
     }
 
     public void ChangeState(GameState newState)
