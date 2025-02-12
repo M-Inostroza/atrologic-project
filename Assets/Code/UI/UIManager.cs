@@ -6,6 +6,8 @@ public class UIManager : MonoBehaviour
 {
     private List<Transform> UI_panels;
 
+    [SerializeField] private BoxCollider2D powerCollider;
+
     private void Start()
     {
         CollectPanels();
@@ -34,6 +36,10 @@ public class UIManager : MonoBehaviour
             case "Level selector":
                 UI_panels[1].gameObject.SetActive(true);
                 break;
+            case "Power generator":
+                UI_panels[2].gameObject.SetActive(true);
+                powerCollider.enabled = false;
+                break;
             default:
                 break;
         }
@@ -50,6 +56,10 @@ public class UIManager : MonoBehaviour
                 break;
             case "Level selector":
                 UI_panels[1].gameObject.SetActive(false);
+                break;
+            case "Power Generator":
+                UI_panels[2].gameObject.SetActive(false);
+                powerCollider.enabled = true;
                 break;
             default:
                 break;

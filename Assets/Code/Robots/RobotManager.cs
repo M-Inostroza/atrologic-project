@@ -25,10 +25,9 @@ public class RobotManager : MonoBehaviour
 
     public void ShowPreview(float x, float y)
     {
-        // Check if a robot is already saved
         if (ES3.KeyExists("RobotPosition"))
         {
-            LoadRobotState(); // Load existing robot instead of instantiating a new one
+            LoadRobotState();
         }
         else
         {
@@ -36,7 +35,6 @@ public class RobotManager : MonoBehaviour
             robotInstance = Instantiate(robotModel.prefab, position, Quaternion.identity);
             robotModel.InitializeAttachmentPoints(robotInstance);
 
-            // Save the new instance so it persists
             SaveRobotState();
         }
     }

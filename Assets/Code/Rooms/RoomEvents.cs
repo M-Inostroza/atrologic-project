@@ -10,12 +10,10 @@ public class RoomEvents : MonoBehaviour
     {
         if (isEntering)
         {
-            Debug.Log($"Invoking OnRoomEntered for room: {roomName}");
             OnRoomEntered?.Invoke(roomName);
         }
         else
         {
-            Debug.Log($"Invoking OnRoomLeft for room: {roomName}");
             OnRoomLeft?.Invoke(roomName);
         }
     }

@@ -1,3 +1,4 @@
+
 using UnityEngine;
 using System;
 
@@ -11,6 +12,15 @@ public class Resource : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            OnResourceCollected?.Invoke(resourceName);
+            Destroy(gameObject);
+        }
+    }
+    private void OnMouseDown()
+    {
+        if (resourceName == "Energy")
+        {
+            PowerGenerator.energySpawned = false;
             OnResourceCollected?.Invoke(resourceName);
             Destroy(gameObject);
         }
