@@ -51,7 +51,7 @@ public class ResourceManager : MonoBehaviour
     private void Start()
     {
         scrapCounter = GameObject.Find("Scrap counter").GetComponent<TMP_Text>();
-        energyCounter = GameObject.Find("Energy").GetComponent<TMP_Text>();
+        energyCounter = GameObject.Find("Energy counter").GetComponent<TMP_Text>();
 
         LoadScrap();
         LoadEnergy();
@@ -68,6 +68,7 @@ public class ResourceManager : MonoBehaviour
         if (Energy + amount <= energyCap)
         {
             Energy += amount;
+            Debug.Log("Energy: " + Energy);
             SaveEnergy();
             UpdateEnergyCounter();
         }
@@ -107,9 +108,14 @@ public class ResourceManager : MonoBehaviour
 
     public void UpdateEnergyCounter()
     {
+        Debug.Log(energyCounter);
         if (energyCounter != null)
         {
             energyCounter.text = Energy.ToString();
+        }
+        else 
+        {
+            Debug.Log("Energy counter not found");
         }
     }
 

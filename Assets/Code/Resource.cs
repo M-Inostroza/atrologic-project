@@ -20,6 +20,7 @@ public class Resource : MonoBehaviour
     {
         if (resourceName == "Energy")
         {
+            Debug.Log(resourceName);
             PowerGenerator.energySpawned = false;
             OnResourceCollected?.Invoke(resourceName);
             Destroy(gameObject);
