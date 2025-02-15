@@ -62,4 +62,9 @@ public class GameManager : MonoBehaviour
     {
         return currentState;
     }
+
+    public void ChangeToBaseState()
+    {
+        ChangeState(GameState.Base);
+    }
 }

@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: f8ae225e437835841a66acd3ba18ffbe
+guid: b534a41d77efd604cb408c443a1f4c01
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5707678237568588010
-    second: 408654802_1725e4bf-0afa-4792-a473-49c276ae0acf_0
+      213: -1818973163136289920
+    second: Test Room - Market_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -97,20 +97,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
-    buildTarget: Android
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: iOS
+    buildTarget: WebGL
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -126,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: 408654802_1725e4bf-0afa-4792-a473-49c276ae0acf_0
+      name: Test Room - Market_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 2500
-        height: 2500
+        width: 1024
+        height: 512
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 6172f7d22e04ac0b0800000000000000
-      internalID: -5707678237568588010
+      spriteID: 083fa43ab85b1c6e0800000000000000
+      internalID: -1818973163136289920
       vertices: []
       indices: 
       edges: []
@@ -160,8 +147,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      408654802_1725e4bf-0afa-4792-a473-49c276ae0acf_0: -5707678237568588010
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

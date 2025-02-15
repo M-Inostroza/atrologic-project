@@ -8,12 +8,15 @@ public class Wheel : Part
     {
         partType = PartType.Ground;
         gameManager = FindFirstObjectByType<GameManager>();
+    }
 
+    private void Start()
+    {
+        base.Start();
         SetWheel();
     }
 
     private void Update()
-
     {
         base.Update();
 

@@ -40,6 +40,9 @@ public class UIManager : MonoBehaviour
                 UI_panels[2].gameObject.SetActive(true);
                 powerCollider.enabled = false;
                 break;
+            case "Market":
+                UI_panels[3].gameObject.SetActive(true);
+                break;
             default:
                 break;
         }
@@ -60,6 +63,9 @@ public class UIManager : MonoBehaviour
             case "Power Generator":
                 UI_panels[2].gameObject.SetActive(false);
                 powerCollider.enabled = true;
+                break;
+            case "Market":
+                UI_panels[3].gameObject.SetActive(false);
                 break;
             default:
                 break;
