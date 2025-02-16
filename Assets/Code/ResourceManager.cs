@@ -144,8 +144,10 @@ public class ResourceManager : MonoBehaviour
 
     private void LoadEnergy()
     {
+        Debug.Log("Calling loadEnergy");
         if (ES3.KeyExists("Energy"))
         {
+            Debug.Log("Energy loaded: " + Energy);
             Energy = ES3.Load<int>("Energy");
             UpdateEnergyCounter();
         }

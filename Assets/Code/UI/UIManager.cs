@@ -25,7 +25,7 @@ public class UIManager : MonoBehaviour
         RoomEvents.OnRoomLeft -= HideRoomUI;
     }
 
-    private void ShowRoomUI(string roomName)
+    public void ShowRoomUI(string roomName)
     {
         CameraManager.CanMove = false;
         switch (roomName)

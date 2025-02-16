@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 public class PartCard : MonoBehaviour
 {
@@ -8,11 +7,12 @@ public class PartCard : MonoBehaviour
     [SerializeField] private TMP_Text priceText;
 
     ResourceManager resourceManager;
-
+    InventoryManager inventoryManager;
 
     private void Start()
     {
         resourceManager = FindFirstObjectByType<ResourceManager>();
+        inventoryManager = FindFirstObjectByType<InventoryManager>();
         priceText.text = price.ToString();
     }
 
@@ -28,7 +28,19 @@ public class PartCard : MonoBehaviour
         else
         {
             Debug.Log("Not enough scrap to buy this part");
+        }
+    }
 
+    public void BuyPart(Part part)
+    {
+        if (resourceManager.Scrap >= price)
+        {
+            resourceManager.RemoveScrap(price);
+            inventoryManager.AddPart(part);
+        }
+        else
+        {
+            Debug.Log("Not enough scrap to buy this part");
         }
     }
 }

@@ -19,8 +19,11 @@ public class Wheel : Part
     private void Update()
     {
         base.Update();
+    }
 
-        RotateWheel(0.2f);
+    private void FixedUpdate()
+    {
+        RotateWheel(1.6f);
     }
 
     void SetWheel()
