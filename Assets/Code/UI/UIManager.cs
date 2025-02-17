@@ -72,6 +72,8 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    // This is a comment
+
 
     void CollectPanels()
     {
