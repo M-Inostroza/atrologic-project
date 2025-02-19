@@ -28,11 +28,13 @@ public class ResourceManager : MonoBehaviour
     private void OnEnable()
     {
         Resource.OnResourceCollected += HandleResourceCollected;
+        GameManager.OnSceneChanged += HandleSceneChanged;
     }
 
     private void OnDisable()
     {
         Resource.OnResourceCollected -= HandleResourceCollected;
+        GameManager.OnSceneChanged -= HandleSceneChanged;
     }
 
     private void HandleResourceCollected(string resourceName)
@@ -40,12 +42,18 @@ public class ResourceManager : MonoBehaviour
         switch (resourceName)
         {
             case "Scrap":
-                AddScrap(1);
+                AddScrap(10);
                 break;
             case "Energy":
                 AddEnergy(energyGain);
                 break;
         }
+    }
+
+    private void HandleSceneChanged(GameManager.GameState newState)
+    {
+        SaveScrap();
+        SaveEnergy();
     }
 
     private void Start()
@@ -67,7 +75,6 @@ public class ResourceManager : MonoBehaviour
         if (Energy + amount <= energyCap)
         {
             Energy += amount;
-            Debug.Log("Energy: " + Energy);
             SaveEnergy();
             UpdateEnergyCounter();
         }
@@ -142,10 +149,8 @@ public class ResourceManager : MonoBehaviour
 
     private void LoadEnergy()
     {
-        Debug.Log("Calling loadEnergy");
         if (ES3.KeyExists("Energy"))
         {
-            Debug.Log("Energy loaded: " + Energy);
             Energy = ES3.Load<int>("Energy");
             UpdateEnergyCounter();
         }

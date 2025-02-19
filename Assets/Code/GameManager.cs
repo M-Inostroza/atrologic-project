@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -10,6 +11,8 @@ public class GameManager : MonoBehaviour
     }
 
     private GameState currentState;
+
+    public static event Action<GameState> OnSceneChanged;
 
     private void Start()
     {
@@ -46,6 +49,8 @@ public class GameManager : MonoBehaviour
                 LoadLevelScene();
                 break;
         }
+
+        OnSceneChanged?.Invoke(newState);
     }
 
     private void LoadBaseScene()

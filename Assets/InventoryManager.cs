@@ -22,10 +22,10 @@ public class InventoryManager : MonoBehaviour
 
     public List<Part> GetParts()
     {
-        for (int i = 0; i < partsInventory.Count; i++)
-        {
-            Debug.Log(partsInventory[i]);
-        }
+        //for (int i = 0; i < partsInventory.Count; i++)
+        //{
+        //    Debug.Log(partsInventory[i]);
+        //}
         Debug.Log("Parts on inventory: " + partsInventory);
         return new List<Part>(partsInventory);
     }

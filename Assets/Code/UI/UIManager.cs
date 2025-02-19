@@ -50,8 +50,12 @@ public class UIManager : MonoBehaviour
 
     public void HideRoomUI(string roomName)
     {
-        CameraManager.CanMove = true;
-
+        Debug.Log(IsAnyPanelActive());
+        if (!IsAnyPanelActive())
+        {
+            
+            CameraManager.CanMove = true;
+        }
         switch (roomName)
         {
             case "Workshop":
@@ -70,6 +74,19 @@ public class UIManager : MonoBehaviour
             default:
                 break;
         }
+    }
+
+    private bool IsAnyPanelActive()
+    {
+        // 5
+        for (int i = 0; i <= 4; i++)
+        {
+            if (i < UI_panels.Count && UI_panels[i].gameObject.activeSelf)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
 

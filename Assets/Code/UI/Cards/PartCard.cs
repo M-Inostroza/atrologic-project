@@ -9,43 +9,48 @@ public class PartCard : MonoBehaviour
     ResourceManager resourceManager;
     InventoryManager inventoryManager;
 
+    [SerializeField]  GameObject buyBtn;
+    [SerializeField]  GameObject deployBtn;
+
     private void Start()
     {
         resourceManager = FindFirstObjectByType<ResourceManager>();
         inventoryManager = FindFirstObjectByType<InventoryManager>();
+
         priceText.text = price.ToString();
     }
 
-    //instantiate a new part
+    // instantiate part
     public void InstantiatePart()
     {
-        if (resourceManager.Scrap >= price)
-        {
-            resourceManager.RemoveScrap(price);
-            Part newPart = Instantiate(part);
-            newPart.transform.position = new Vector3(12.8f, -7f, 0f);
-        }
-        else
-        {
-            Debug.Log("Not enough scrap to buy this part");
-        }
+        Part newPart = Instantiate(part);
+        newPart.transform.position = new Vector3(12.8f, -7f, 0f);
     }
 
     public void BuyPart(Part part)
     {
         if (resourceManager.Scrap >= price)
         {
-            // debug scrap
-            Debug.Log("Scrap from resource manager: " + resourceManager.Scrap);
-
-            // debug price 
-            Debug.Log("Price of part: " + price);
             resourceManager.RemoveScrap(price);
             inventoryManager.AddPart(part);
         }
         else
         {
             Debug.Log("Not enough scrap to buy this part");
+        }
+    }
+
+    public void DeployMode(bool deploy)
+    {
+        if (deploy)
+        {
+            buyBtn.SetActive(false);
+            deployBtn.SetActive(true);
+        }
+        else
+        {
+            buyBtn.SetActive(true);
+            deployBtn.SetActive(false);
         }
     }
 }
