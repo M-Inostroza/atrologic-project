@@ -52,7 +52,6 @@ public class ResourceManager : MonoBehaviour
     {
         scrapCounter = GameObject.Find("Scrap counter").GetComponent<TMP_Text>();
         energyCounter = GameObject.Find("Energy counter").GetComponent<TMP_Text>();
-
         LoadScrap();
         LoadEnergy();
     }
@@ -108,7 +107,6 @@ public class ResourceManager : MonoBehaviour
 
     public void UpdateEnergyCounter()
     {
-        Debug.Log(energyCounter);
         if (energyCounter != null)
         {
             energyCounter.text = Energy.ToString();

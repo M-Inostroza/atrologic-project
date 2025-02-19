@@ -35,6 +35,11 @@ public class PartCard : MonoBehaviour
     {
         if (resourceManager.Scrap >= price)
         {
+            // debug scrap
+            Debug.Log("Scrap from resource manager: " + resourceManager.Scrap);
+
+            // debug price 
+            Debug.Log("Price of part: " + price);
             resourceManager.RemoveScrap(price);
             inventoryManager.AddPart(part);
         }
