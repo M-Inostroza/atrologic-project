@@ -15,7 +15,6 @@ public class CameraManager : MonoBehaviour
     private void Start()
     {
         mainCamera = Camera.main;
-
         isZoomed = false;
     }
 
@@ -73,6 +72,7 @@ public class CameraManager : MonoBehaviour
         transform.DOMove(targetPosition, zoomSpeed).SetEase(Ease.OutCirc);
         mainCamera.DOOrthoSize(5f, zoomSpeed);
         isZoomed = false;
+        canMove = true;
     }
 
 

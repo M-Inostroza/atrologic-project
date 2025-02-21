@@ -7,26 +7,33 @@ public class InventoryManager : MonoBehaviour
 
     private void Start()
     {
-        partsInventory = new List<Part>();
+        GetParts();
     }
 
     public void AddPart(Part part)
     {
         partsInventory.Add(part);
         Debug.Log($"Part {part.name} added to inventory.");
-        for (int i = 0; i < partsInventory.Count; i++)
-        {
-            Debug.Log(partsInventory[i]);
-        }
+        ES3.Save<List<Part>>("partsInventory", partsInventory);
     }
 
     public List<Part> GetParts()
     {
-        //for (int i = 0; i < partsInventory.Count; i++)
-        //{
-        //    Debug.Log(partsInventory[i]);
-        //}
-        Debug.Log("Parts on inventory: " + partsInventory);
+        if (ES3.KeyExists("partsInventory"))
+        {
+            partsInventory = ES3.Load<List<Part>>("partsInventory");
+        }
+        else
+        {
+            partsInventory = new List<Part>();
+            Debug.LogWarning("partsInventory key not found. Initializing with an empty list.");
+        }
+
+        Debug.Log("Part count: " + partsInventory.Count);
+        foreach (var part in partsInventory)
+        {
+            Debug.Log("Parts in inventory: " + part.name);
+        }
         return new List<Part>(partsInventory);
     }
 }
