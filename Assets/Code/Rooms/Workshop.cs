@@ -41,7 +41,7 @@ public class Workshop : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
-        foreach (Part part in inventoryManager.GetParts())
+        foreach (Part part in inventoryManager.partList)
         {
             GameObject card = Instantiate(partCardPrefab, cardGrid);
             card.GetComponent<PartCard>().DeployMode(true);

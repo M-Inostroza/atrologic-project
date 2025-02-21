@@ -8,23 +8,16 @@ public enum PartType
     Sensor,
 }
 
-public class PartData
-{
-    public string name;
-    public Vector3 localPosition;
-    public Quaternion localRotation;
-    public bool isAttached;
-    public string attachmentPointName;
-}
-
 public class Part : MonoBehaviour
 {
     public PartType partType;
     public Transform attachmentPoint;
     public bool isAttached;
+    public string instanceID;
 
     protected bool isDragging = false;
     private Vector3 offset;
+    
 
     RectTransform recycleIcon;
     Core core;
