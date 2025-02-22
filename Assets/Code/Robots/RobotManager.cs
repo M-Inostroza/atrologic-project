@@ -95,7 +95,7 @@ public class RobotManager : MonoBehaviour
         {
             foreach (Transform part in point) // Go one level deeper
             {
-                PartData data = new PartData
+                PartData data = new PartData(part.GetComponent<Part>())
                 {
                     name = part.name,
                     localPosition = part.localPosition,

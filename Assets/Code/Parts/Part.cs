@@ -1,4 +1,3 @@
-using System.Transactions;
 using UnityEngine;
 
 public enum PartType
@@ -13,6 +12,7 @@ public class Part : MonoBehaviour
     public PartType partType;
     public Transform attachmentPoint;
     public bool isAttached;
+    public bool isDeployed = false;
     public string instanceID;
 
     protected bool isDragging = false;
@@ -49,7 +49,7 @@ public class Part : MonoBehaviour
         }
     }
 
-    private bool IsOverUIElement()
+    private bool IsOverRecycle()
     {
         recycleIcon = GameObject.Find("Recycle").GetComponent<RectTransform>();
         if (recycleIcon == null) return false;
@@ -93,9 +93,9 @@ public class Part : MonoBehaviour
                 }
                 else
                 {
-                    if (IsOverUIElement())
+                    if (IsOverRecycle())
                     {
-                        Destroy(gameObject);
+                        Recycle();
                     }
                 }
             }
@@ -116,6 +116,18 @@ public class Part : MonoBehaviour
         core.SetAttachmentPointStatus(transform.parent.transform, false);
         transform.SetParent(null);
         isAttached = false;
+    }
+
+    void Recycle()
+    {
+        isDeployed = false;
+
+        gameObject.SetActive(false);
+        gameObject.transform.position = new Vector3(12.8f, -7f, 0f);
+
+        FindFirstObjectByType<Workshop>().PopulateGrid();
+
+        Debug.Log($"{name} was recycled and can now be deployed again.");
     }
 
     private Vector3 GetMouseWorldPosition()

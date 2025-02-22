@@ -10,7 +10,7 @@ public class Workshop : MonoBehaviour
     [SerializeField] GameObject partCardPrefab;
 
     // Coordinates for preview
-    private float previewX = 12.802f;
+    private float previewX = 13.46f;
     private float previewY = -5.131f;
 
     [SerializeField] private BoxCollider2D workshopCollider;
@@ -35,16 +35,23 @@ public class Workshop : MonoBehaviour
         }
     }
 
-    void PopulateGrid()
+    public void PopulateGrid()
     {
         foreach (Transform child in cardGrid)
         {
             Destroy(child.gameObject);
         }
-        foreach (Part part in inventoryManager.partList)
+
+        foreach (Part part in inventoryManager.GetParts())
         {
-            GameObject card = Instantiate(partCardPrefab, cardGrid);
-            card.GetComponent<PartCard>().DeployMode(true);
+            GameObject cardObj = Instantiate(partCardPrefab, cardGrid);
+            PartCard newCard = cardObj.GetComponent<PartCard>();
+
+            if (newCard != null)
+            {
+                newCard.InitializeCard(part);
+            }
         }
     }
+
 }

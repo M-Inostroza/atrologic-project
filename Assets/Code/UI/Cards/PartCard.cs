@@ -8,11 +8,12 @@ public class PartCard : MonoBehaviour
 
     ResourceManager resourceManager;
     InventoryManager inventoryManager;
+    [SerializeField] Workshop workshop;
 
     [SerializeField]  GameObject buyBtn;
     [SerializeField]  GameObject deployBtn;
 
-    string cardInstanceID;
+    public string CardInstanceID { get; private set; }
 
     private void Start()
     {
@@ -26,22 +27,22 @@ public class PartCard : MonoBehaviour
     {
         if (resourceManager.Scrap >= price)
         {
-            // Instantiate a new part
             Part newPart = Instantiate(part);
             newPart.transform.position = new Vector3(12.8f, -7f, 0f);
-            newPart.gameObject.SetActive(false); // Keep inactive
+            newPart.gameObject.SetActive(false);
             newPart.transform.parent = inventoryManager.transform;
 
-            // Assign a unique ID to distinguish between similar parts
+            // Assign unique ID and ensure it starts as not deployed
             newPart.instanceID = $"{part.name}_{System.Guid.NewGuid()}";
+            newPart.isDeployed = false;
 
-            cardInstanceID = newPart.instanceID;
+            Debug.Log("part instance: " + newPart.instanceID);
 
-            // Add to the inventory list
-            inventoryManager.partList.Add(newPart);
+            // Add to inventory & save it
+            inventoryManager.AddPart(newPart);
+            inventoryManager.SaveInventory(); // Save immediately
 
-            // Deduct cost
-            resourceManager.RemoveScrap(price);
+            workshop.PopulateGrid();
 
             Debug.Log($"Bought and stored: {newPart.name}");
         }
@@ -51,19 +52,38 @@ public class PartCard : MonoBehaviour
         }
     }
 
+    public void InitializeCard(Part assignedPart)
+    {
+        if (assignedPart == null)
+        {
+            Debug.LogError("Attempted to initialize PartCard with a null part!");
+            return;
+        }
+
+        part = assignedPart;
+        CardInstanceID = part.instanceID;
+        priceText.text = price.ToString();
+
+        DeployMode(!part.isDeployed);
+    }
+
     public void ActivatePart()
     {
-        foreach (Transform partTransform in inventoryManager.transform)
+        foreach (Part part in inventoryManager.GetParts())
         {
-            Part part = partTransform.GetComponent<Part>();
-            Debug.Log(part.instanceID + " instance from inventory");
-            Debug.Log(cardInstanceID + " instance from card");
-            if (part.instanceID == cardInstanceID)
+            if (part.instanceID == CardInstanceID && !part.isDeployed)
             {
-                Debug.Log("from equall");
                 part.gameObject.SetActive(true);
+                part.isDeployed = true;
+                Debug.Log($"Activated part: {part.name} (Deployed)");
+
+                // Disable deploy button so it can't be deployed again
+                deployBtn.SetActive(false);
+                return;
             }
         }
+
+        Debug.LogWarning($"Part with ID {CardInstanceID} not found or already deployed.");
     }
 
     public void DeployMode(bool deploy)
