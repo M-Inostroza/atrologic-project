@@ -1,19 +1,10 @@
 using UnityEngine;
 
-public enum PartType
-{
-    Ground,
-    Air,
-    Sensor,
-}
-
 public class Part : MonoBehaviour
 {
-    public PartType partType;
     public Transform attachmentPoint;
     public bool isAttached;
-    public bool isDeployed = false;
-    public string instanceID;
+    public string prefabID;
 
     protected bool isDragging = false;
     private Vector3 offset;
@@ -120,12 +111,10 @@ public class Part : MonoBehaviour
 
     void Recycle()
     {
-        isDeployed = false;
-
         gameObject.SetActive(false);
         gameObject.transform.position = new Vector3(12.8f, -7f, 0f);
 
-        FindFirstObjectByType<Workshop>().PopulateGrid();
+        //FindFirstObjectByType<Workshop>().PopulateGrid();
 
         Debug.Log($"{name} was recycled and can now be deployed again.");
     }

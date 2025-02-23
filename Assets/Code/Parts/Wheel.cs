@@ -6,17 +6,16 @@ public class Wheel : Part
     private GameManager gameManager;
     private void Awake()
     {
-        partType = PartType.Ground;
         gameManager = FindFirstObjectByType<GameManager>();
     }
 
-    private void Start()
+    private new void Start()
     {
         base.Start();
         SetWheel();
     }
 
-    private void Update()
+    private new void Update()
     {
         base.Update();
     }

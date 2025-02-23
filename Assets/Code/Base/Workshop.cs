@@ -1,5 +1,4 @@
-using Unity.VisualScripting;
-using UnityEditor.Tilemaps;
+
 using UnityEngine;
 
 public class Workshop : MonoBehaviour
@@ -18,12 +17,13 @@ public class Workshop : MonoBehaviour
 
     private void OnEnable()
     {
-        PopulateGrid();
-        robotManager.ShowPreview(previewX, previewY);
         if (workshopCollider != null)
         {
             workshopCollider.enabled = false;
         }
+        //PopulateGrid();
+        robotManager.ShowPreview(previewX, previewY);
+        
     }
 
     private void OnDisable()
@@ -35,28 +35,23 @@ public class Workshop : MonoBehaviour
         }
     }
 
-    public void PopulateGrid()
-    {
-        foreach (Transform child in cardGrid)
-        {
-            Destroy(child.gameObject);
-        }
+    //public void PopulateGrid()
+    //{
+    //    foreach (Transform child in cardGrid)
+    //    {
+    //        Destroy(child.gameObject);
+    //    }
 
-        foreach (Part part in inventoryManager.GetParts())
-        {
-            if (part == null) continue; // Skip null parts
+    //    foreach (PartData part in inventoryManager.GetParts())
+    //    {
+    //        GameObject cardObj = Instantiate(partCardPrefab, cardGrid);
+    //        PartCard newCard = cardObj.GetComponent<PartCard>();
 
-            GameObject cardObj = Instantiate(partCardPrefab, cardGrid);
-            PartCard newCard = cardObj.GetComponent<PartCard>();
+    //        if (newCard != null)
+    //        {
+    //            newCard.InitializeCard(part);
+    //        }
+    //    }
+    //}
 
-            if (newCard != null)
-            {
-                newCard.InitializeCard(part);
-            }
-            else
-            {
-                Debug.LogError("Failed to get PartCard component from instantiated prefab!");
-            }
-        }
-    }
 }
