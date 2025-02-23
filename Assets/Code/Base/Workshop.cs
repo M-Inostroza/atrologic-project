@@ -44,6 +44,8 @@ public class Workshop : MonoBehaviour
 
         foreach (Part part in inventoryManager.GetParts())
         {
+            if (part == null) continue; // Skip null parts
+
             GameObject cardObj = Instantiate(partCardPrefab, cardGrid);
             PartCard newCard = cardObj.GetComponent<PartCard>();
 
@@ -51,7 +53,10 @@ public class Workshop : MonoBehaviour
             {
                 newCard.InitializeCard(part);
             }
+            else
+            {
+                Debug.LogError("Failed to get PartCard component from instantiated prefab!");
+            }
         }
     }
-
 }

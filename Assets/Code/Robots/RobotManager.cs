@@ -43,7 +43,7 @@ public class RobotManager : MonoBehaviour
     {
         if (robotInstance != null)
         {
-            SaveRobotState(); // Save modifications before destroying
+            SaveRobotState();
             Destroy(robotInstance);
         }
     }
@@ -93,17 +93,18 @@ public class RobotManager : MonoBehaviour
 
         foreach (Transform point in robotInstance.transform)
         {
-            foreach (Transform part in point) // Go one level deeper
+            foreach (Transform partTransform in point) // Go one level deeper
             {
-                PartData data = new PartData(part.GetComponent<Part>())
+                Part partComponent = partTransform.GetComponent<Part>();
+                if (partComponent != null)
                 {
-                    name = part.name,
-                    localPosition = part.localPosition,
-                    localRotation = part.localRotation,
-                    isAttached = part.GetComponent<Part>().isAttached,
-                    attachmentPointName = point.name
-                };
-                attachedParts.Add(data);
+                    PartData data = new PartData(partComponent)
+                    {
+                        name = partComponent.name.Replace("(Clone)", "").Trim()
+                    };
+
+                    attachedParts.Add(data);
+                }
             }
         }
 
@@ -122,8 +123,8 @@ public class RobotManager : MonoBehaviour
             if (parent != null)
             {
                 string cleanName = data.name.Replace("(Clone)", "").Trim();
+                GameObject partPrefab = Resources.Load<GameObject>($"Parts/{cleanName}");
 
-                GameObject partPrefab = FindPartPrefabByName(cleanName);
                 if (partPrefab != null)
                 {
                     GameObject newPart = Instantiate(partPrefab, parent);

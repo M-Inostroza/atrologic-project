@@ -25,7 +25,7 @@ public class InventoryManager : MonoBehaviour
         if (partList.Contains(part))
         {
             partList.Remove(part);
-            SaveInventory(); // Save inventory after removing a part
+            SaveInventory();
             Debug.Log($"Part {part.name} removed from inventory.");
         }
         else
@@ -52,14 +52,17 @@ public class InventoryManager : MonoBehaviour
 
         foreach (Part part in partList)
         {
+            if (part == null) continue; // Avoid null parts
+
             string cleanName = part.name.Replace("(Clone)", "").Trim();
             PartData partData = new PartData(part)
             {
-                name = cleanName
+                name = cleanName,
+                isDeployed = part.isDeployed // Save the deployed state
             };
 
             partDataList.Add(partData);
-            Debug.Log($"Saving Part: {cleanName}, Active: {partData.isActive}");
+            Debug.Log($"Saving Part: {cleanName}, Deployed: {partData.isDeployed}");
         }
 
         ES3.Save("inventory", partDataList);
@@ -82,24 +85,31 @@ public class InventoryManager : MonoBehaviour
                     GameObject newPart = Instantiate(partPrefab);
                     Part partComponent = newPart.GetComponent<Part>();
 
+                    if (partComponent == null)
+                    {
+                        Debug.LogError($"Loaded part {cleanName} but could not find Part component! Skipping...");
+                        Destroy(newPart);
+                        continue;
+                    }
+
                     // Restore part properties
                     partComponent.instanceID = data.instanceID;
-                    partComponent.isDeployed = data.isDeployed;
+                    partComponent.isDeployed = data.isDeployed; // Restore deployment state
                     newPart.transform.localPosition = data.localPosition;
                     newPart.transform.localRotation = data.localRotation;
 
-                    // NEW: Set parent to InventoryManager
+                    // Set parent to InventoryManager
                     newPart.transform.SetParent(this.transform);
 
-                    // NEW: Restore active/inactive state
+                    // Restore active state
                     newPart.SetActive(data.isActive);
 
                     partList.Add(partComponent);
-                    Debug.Log($"Loaded part: {cleanName}, Active: {data.isActive}");
+                    Debug.Log($"Loaded Part: {cleanName}, Deployed: {data.isDeployed}");
                 }
                 else
                 {
-                    Debug.LogWarning($"Part prefab {cleanName} not found in Resources!");
+                    Debug.LogWarning($"Part prefab {cleanName} not found in Resources! Skipping...");
                 }
             }
         }

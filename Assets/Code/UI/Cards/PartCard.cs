@@ -12,6 +12,7 @@ public class PartCard : MonoBehaviour
 
     [SerializeField]  GameObject buyBtn;
     [SerializeField]  GameObject deployBtn;
+    [SerializeField] GameObject modifyBtn;
 
     public string CardInstanceID { get; private set; }
 
@@ -27,6 +28,7 @@ public class PartCard : MonoBehaviour
     {
         if (resourceManager.Scrap >= price)
         {
+            resourceManager.RemoveScrap(price);
             Part newPart = Instantiate(part);
             newPart.transform.position = new Vector3(12.8f, -7f, 0f);
             newPart.gameObject.SetActive(false);
@@ -56,7 +58,7 @@ public class PartCard : MonoBehaviour
     {
         if (assignedPart == null)
         {
-            Debug.LogError("Attempted to initialize PartCard with a null part!");
+            Debug.LogError("Attempted to initialize PartCard with a null part! Skipping...");
             return;
         }
 
@@ -64,7 +66,18 @@ public class PartCard : MonoBehaviour
         CardInstanceID = part.instanceID;
         priceText.text = price.ToString();
 
-        DeployMode(!part.isDeployed);
+        if (part.isDeployed)
+        {
+            // Show Modify Button, Hide Deploy Button
+            deployBtn.SetActive(false);
+            modifyBtn.SetActive(true);
+        }
+        else
+        {
+            // Show Deploy Button, Hide Modify Button
+            deployBtn.SetActive(true);
+            modifyBtn.SetActive(false);
+        }
     }
 
     public void ActivatePart()
@@ -77,7 +90,6 @@ public class PartCard : MonoBehaviour
                 part.isDeployed = true;
                 Debug.Log($"Activated part: {part.name} (Deployed)");
 
-                // Disable deploy button so it can't be deployed again
                 deployBtn.SetActive(false);
                 return;
             }

@@ -8,8 +8,8 @@ public class PartData
     public bool isAttached;
     public string attachmentPointName;
     public string instanceID;
-    public bool isDeployed;
-    public bool isActive; // NEW: Save active state
+    public bool isDeployed; // Tracks if the part is currently attached
+    public bool isActive; // Tracks if part is active in the scene
 
     public PartData(Part part)
     {
@@ -19,7 +19,7 @@ public class PartData
         isAttached = part.isAttached;
         attachmentPointName = part.attachmentPoint != null ? part.attachmentPoint.name : "";
         instanceID = part.instanceID;
-        isDeployed = part.isDeployed;
-        isActive = part.gameObject.activeSelf; // Save active state
+        isDeployed = part.isDeployed; // Important for tracking deployment state
+        isActive = part.gameObject.activeSelf;
     }
 }
