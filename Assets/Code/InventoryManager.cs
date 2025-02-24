@@ -7,7 +7,7 @@ public class InventoryManager : MonoBehaviour
 
     private void Start()
     {
-        LoadInventory();
+        //LoadInventory();
     }
 
     public void AddPart(PartData part)
@@ -15,7 +15,7 @@ public class InventoryManager : MonoBehaviour
         if (part != null && !partList.Contains(part))
         {
             partList.Add(part);
-            SaveInventory();
+            //SaveInventory();
             Debug.Log($"Added {part.partName} to inventory.");
         }
     }
@@ -25,7 +25,7 @@ public class InventoryManager : MonoBehaviour
         if (partList.Contains(part))
         {
             partList.Remove(part);
-            SaveInventory();
+            //SaveInventory();
             Debug.Log($"Removed {part.partName} from inventory.");
         }
     }
@@ -35,18 +35,18 @@ public class InventoryManager : MonoBehaviour
         return new List<PartData>(partList);
     }
 
-    public void SaveInventory()
-    {
-        ES3.Save("inventory", partList);
-        Debug.Log("Inventory saved.");
-    }
+    //public void SaveInventory()
+    //{
+    //    ES3.Save("inventory", partList);
+    //    Debug.Log("Inventory saved.");
+    //}
 
-    public void LoadInventory()
-    {
-        if (ES3.KeyExists("inventory"))
-        {
-            partList = ES3.Load<List<PartData>>("inventory");
-            Debug.Log("Inventory loaded.");
-        }
-    }
+    //public void LoadInventory()
+    //{
+    //    if (ES3.KeyExists("inventory"))
+    //    {
+    //        partList = ES3.Load<List<PartData>>("inventory");
+    //        Debug.Log("Inventory loaded.");
+    //    }
+    //}
 }
