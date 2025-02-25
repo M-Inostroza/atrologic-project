@@ -13,8 +13,6 @@ public class Workshop : MonoBehaviour
     [SerializeField] private BoxCollider2D workshopCollider;
     [SerializeField] private Transform cardGrid;
 
-    [SerializeField] GameObject partCardPrefab;
-
     private void OnEnable()
     {
         if (workshopCollider != null)
@@ -34,21 +32,6 @@ public class Workshop : MonoBehaviour
             workshopCollider.enabled = true;
         }
     }
-
-    public void AddPartCard(PartData partData)
-    {
-        Debug.Log("From part added");
-        GameObject cardObj = Instantiate(partCardPrefab, cardGrid);
-        Debug.Log(cardObj);
-        PartCard newCard = cardObj.GetComponent<PartCard>();
-
-        if (newCard != null)
-        {
-            cardObj.transform.SetParent(cardGrid);
-            newCard.SetPart(partData);
-        }
-    }
-
 
 
     //public void PopulateGrid()

@@ -9,12 +9,13 @@ public class ShopCard : MonoBehaviour
     [SerializeField] private int price;
     [SerializeField] private TMP_Text priceText;
 
-    [SerializeField] Workshop workshop;
+    [SerializeField] InventoryManager inventory;
     [SerializeField] GameObject buyBtn;
 
     [SerializeField] PartData partData;
 
     ResourceManager resourceManager;
+
 
     private void Start()
     {
@@ -29,15 +30,13 @@ public class ShopCard : MonoBehaviour
         priceText.text = price.ToString();
     }
 
-    public void BuyPart()
-    {
-        if (resourceManager.Scrap >= price)
-        {
-            workshop.AddPartCard(partData);
-        } else {
-            Debug.Log("Not enough scrap");
-        }
-    }
-
-
+    //public void BuyPart()
+    //{
+    //    if (resourceManager.Scrap >= price)
+    //    {
+    //        inventory.AddPartToInventory(partData);
+    //    } else {
+    //        Debug.Log("Not enough scrap");
+    //    }
+    //}
 }

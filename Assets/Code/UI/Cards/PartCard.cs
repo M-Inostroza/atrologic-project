@@ -17,6 +17,6 @@ public class PartCard : MonoBehaviour
     public void Deploy()
     {
         Vector3 deployPosition = new Vector3(12.78f, -6.61f, 0f);
-        Instantiate(partData.partPrefab, deployPosition, Quaternion.identity);
+        //Instantiate(partData.partPrefab, deployPosition, Quaternion.identity);
     }
 }
