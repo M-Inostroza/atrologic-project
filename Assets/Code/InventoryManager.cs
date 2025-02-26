@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class InventoryManager : MonoBehaviour
@@ -10,123 +9,43 @@ public class InventoryManager : MonoBehaviour
 
     private void Start()
     {
-        //ResetInventory();
         LoadInventory();
     }
 
-    //public void AddPartToInventory(PartData partData)
-    //{
-    //    if (partData == null)
-    //    {
-    //        Debug.LogError("Attempted to add a null part to inventory.");
-    //        return;
-    //    }
-
-    //    // Create a new instance of PartData from the existing asset
-    //    //PartData newPart = Instantiate(partData);
-
-    //    // Assign unique ID
-    //    newPart.partID = System.Guid.NewGuid().ToString();
-
-    //    Debug.Log("From add to inv: " + newPart);
-
-    //    if (!partList.Contains(newPart))
-    //    {
-    //        partList.Add(newPart);
-    //        CreateCard(newPart);
-    //        Debug.Log($"Added {newPart.partName} {newPart.partID} to inventory.");
-    //    }
-    //}
-
-
-    public void ResetInventory()
+    public void AddPartToInventory(PartData partData)
     {
-        if (ES3.KeyExists("inventory"))
+        if (partData == null)
         {
-            ES3.DeleteKey("inventory");
-            partList.Clear();
-            Debug.Log("Inventory reset.");
+            Debug.LogError("Attempted to add a null part to inventory.");
+            return;
         }
-    }
 
-    public void RemovePart(PartData partData)
-    {
-        if (partList.Contains(partData))
+        Debug.Log($"From add to inv: {partData.partName}");
+
+        if (!partList.Exists(p => p.partID == partData.partID))
         {
-            partList.Remove(partData);
-            Debug.Log($"Removed {partData.partName} from inventory.");
+            partList.Add(partData);
+            CreateCard(partData);
+            Debug.Log($"Added {partData.partName} {partData.partID} to inventory.");
         }
-    }
-
-    public List<PartData> GetParts()
-    {
-        Debug.Log("Returning parts." + partList);
-        return new List<PartData>(partList);
     }
 
     public void SaveInventory()
     {
-        List<PartData> serializableParts = new List<PartData>();
-
-        foreach (PartData part in partList)
-        {
-            PartData partData = new PartData
-            {
-                partName = part.partName,
-                isDeployed = part.isDeployed,
-                isActive = part.isActive,
-                localPosition = part.localPosition,
-                localRotation = part.localRotation,
-                attachmentPointName = part.attachmentPointName,
-                partID = part.partID
-            };
-
-            serializableParts.Add(partData);
-            Debug.Log($"Saving Part: {partData.partName}, Active: {partData.isActive}");
-        }
-
-        ES3.Save("inventory", serializableParts);
+        ES3.Save("inventory", partList);
         Debug.Log("Inventory saved.");
     }
 
-    private void LoadInventory()
+    public void LoadInventory()
     {
         if (ES3.KeyExists("inventory"))
         {
-            List<PartData> savedParts = ES3.Load<List<PartData>>("inventory");
+            partList = ES3.Load<List<PartData>>("inventory");
 
-            foreach (PartData data in savedParts)
+            foreach (PartData partData in partList)
             {
-                Debug.Log($"Loading Part: {data.partName}");
-
-                // Load the correct prefab from Resources
-                GameObject partPrefab = Resources.Load<GameObject>($"Parts/{data.partName}");
-
-                if (partPrefab != null)
-                {
-                    GameObject newPart = Instantiate(partPrefab, transform);
-                    PartData partComponent = newPart.GetComponent<PartData>();
-
-                    if (partComponent == null)
-                    {
-                        Debug.LogError($"Loaded part {data.partName} but could not find PartData component! Skipping...");
-                        Destroy(newPart);
-                        continue;
-                    }
-
-                    // Restore part properties
-                    partComponent.isDeployed = data.isDeployed;
-                    partComponent.isActive = data.isActive;
-                    newPart.transform.localPosition = data.localPosition;
-                    newPart.transform.localRotation = data.localRotation;
-
-                    partList.Add(partComponent);
-                    Debug.Log($"Loaded Part: {data.partName}, Deployed: {data.isDeployed}");
-                }
-                else
-                {
-                    Debug.LogWarning($"Part prefab {data.partName} not found!");
-                }
+                Debug.Log($"Loaded Part: {partData.partName}");
+                CreateCard(partData); // Recreate UI Card
             }
         }
         else

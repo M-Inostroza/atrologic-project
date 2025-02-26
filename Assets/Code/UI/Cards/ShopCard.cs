@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+
 public class ShopCard : MonoBehaviour
 {
     [SerializeField] private TMP_Text partNameText;
@@ -12,31 +13,25 @@ public class ShopCard : MonoBehaviour
     [SerializeField] InventoryManager inventory;
     [SerializeField] GameObject buyBtn;
 
-    [SerializeField] PartData partData;
-
     ResourceManager resourceManager;
-
 
     private void Start()
     {
-        resourceManager = FindObjectOfType<ResourceManager>();
-        SetCard();
+        resourceManager = FindFirstObjectByType<ResourceManager>();
     }
 
-    void SetCard()
+    public void BuyPart(string partName)
     {
-        Debug.Log("Name from data: " + partData.partName);
-        partNameText.text = partData.partName;
-        priceText.text = price.ToString();
+        if (resourceManager.Scrap >= price)
+        {
+            PartData newPart = new PartData(partName);
+            inventory.AddPartToInventory(newPart);
+            inventory.SaveInventory();
+            Debug.Log($"Bought and stored: {newPart.partName}");
+        }
+        else
+        {
+            Debug.Log("Not enough scrap");
+        }
     }
-
-    //public void BuyPart()
-    //{
-    //    if (resourceManager.Scrap >= price)
-    //    {
-    //        inventory.AddPartToInventory(partData);
-    //    } else {
-    //        Debug.Log("Not enough scrap");
-    //    }
-    //}
 }

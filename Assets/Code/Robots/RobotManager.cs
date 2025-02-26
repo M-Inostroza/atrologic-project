@@ -55,7 +55,7 @@ public class RobotManager : MonoBehaviour
         ES3.Save("RobotPosition", robotInstance.transform.position);
         ES3.Save("RobotPrefabPath", robotModel.prefab.name); // Save prefab
 
-        //SaveParts();
+        SaveParts();
     }
 
     public void LoadRobotState(Transform spawnPosition = null)
@@ -76,78 +76,87 @@ public class RobotManager : MonoBehaviour
         }
         robotModel.InitializeAttachmentPoints(robotInstance);
 
-        //LoadParts();
+        LoadParts();
     }
 
-    //private void SaveParts()
-    //{
-    //    List<PartData> attachedParts = new List<PartData>();
+    private void SaveParts()
+    {
+        List<PartData> attachedParts = new List<PartData>();
 
-    //    Core core = robotInstance.GetComponentInChildren<Core>();
+        Core core = robotInstance.GetComponentInChildren<Core>();
 
-    //    if (core != null)
-    //    {
-    //        var attachmentPointsStatus = core.GetAttachmentPointsStatus();
-    //        ES3.Save("AttachmentPointsStatus", attachmentPointsStatus);
-    //    }
+        if (core != null)
+        {
+            var attachmentPointsStatus = core.GetAttachmentPointsStatus();
+            ES3.Save("AttachmentPointsStatus", attachmentPointsStatus);
+        }
 
-    //    foreach (Transform point in robotInstance.transform)
-    //    {
-    //        foreach (Transform partTransform in point) // Go one level deeper
-    //        {
-    //            Part partComponent = partTransform.GetComponent<Part>();
-    //            if (partComponent != null)
-    //            {
-    //                PartData data = new PartData(partComponent)
-    //                {
-    //                    name = partComponent.name.Replace("(Clone)", "").Trim()
-    //                };
+        foreach (Transform point in robotInstance.transform)
+        {
+            foreach (Transform partTransform in point) // Go one level deeper
+            {
+                Part partComponent = partTransform.GetComponent<Part>();
+                if (partComponent != null)
+                {
+                    // Correctly create a new PartData instance
+                    PartData data = new PartData(partComponent.name)
+                    {
+                        isDeployed = true,
+                        isActive = partComponent.gameObject.activeSelf,
+                        localPosition = partTransform.localPosition,
+                        localRotation = partTransform.localRotation,
+                        attachmentPointName = point.name
+                    };
 
-    //                attachedParts.Add(data);
-    //            }
-    //        }
-    //    }
+                    attachedParts.Add(data);
+                }
+            }
+        }
 
-    //    ES3.Save("RobotAttachedTransforms", attachedParts);
-    //}
+        ES3.Save("RobotAttachedTransforms", attachedParts);
+        Debug.Log("Robot parts saved.");
+    }
 
-    //private void LoadParts()
-    //{
-    //    if (!ES3.KeyExists("RobotAttachedTransforms")) return;
 
-    //    List<PartData> attachedParts = ES3.Load<List<PartData>>("RobotAttachedTransforms");
+    private void LoadParts()
+    {
+        if (!ES3.KeyExists("RobotAttachedTransforms")) return;
 
-    //    foreach (PartData data in attachedParts)
-    //    {
-    //        Transform parent = FindChildByName(robotInstance.transform, data.attachmentPointName);
-    //        if (parent != null)
-    //        {
-    //            string cleanName = data.name.Replace("(Clone)", "").Trim();
-    //            GameObject partPrefab = Resources.Load<GameObject>($"Parts/{cleanName}");
+        List<PartData> attachedParts = ES3.Load<List<PartData>>("RobotAttachedTransforms");
 
-    //            if (partPrefab != null)
-    //            {
-    //                GameObject newPart = Instantiate(partPrefab, parent);
-    //                Part partComponent = newPart.GetComponent<Part>();
+        foreach (PartData data in attachedParts)
+        {
+            Debug.Log($"Trying to load Part: {data.partName} from Resources");
+            Transform parent = FindChildByName(robotInstance.transform, data.attachmentPointName);
+            if (parent != null)
+            {
+                string cleanName = data.partName.Replace("(Clone)", "").Trim();
+                GameObject partPrefab = Resources.Load<GameObject>($"Parts/{cleanName}");
 
-    //                if (partComponent != null)
-    //                {
-    //                    partComponent.isAttached = data.isAttached;
-    //                    newPart.transform.localPosition = data.localPosition;
-    //                    newPart.transform.localRotation = data.localRotation;
-    //                }
-    //                else
-    //                {
-    //                    Debug.LogWarning($"Prefab '{data.name}' does not have a Part component!");
-    //                }
-    //            }
-    //            else
-    //            {
-    //                Debug.LogWarning($"Part prefab '{data.name}' not found!");
-    //            }
-    //        }
-    //    }
-    //}
+                if (partPrefab != null)
+                {
+                    GameObject newPart = Instantiate(partPrefab, parent);
+                    newPart.transform.localPosition = data.localPosition;
+                    newPart.transform.localRotation = data.localRotation;
+
+                    Part partComponent = newPart.GetComponent<Part>();
+                    if (partComponent != null)
+                    {
+                        partComponent.isAttached = true;
+                    }
+                    else
+                    {
+                        Debug.LogWarning($"Prefab '{data.partName}' does not have a Part component!");
+                    }
+                }
+                else
+                {
+                    Debug.LogWarning($"Part prefab '{data.partName}' not found in Resources!");
+                }
+            }
+        }
+        Debug.Log("Robot parts loaded.");
+    }
 
     private Transform FindChildByName(Transform parent, string name)
     {
@@ -159,15 +168,6 @@ public class RobotManager : MonoBehaviour
         return null;
     }
 
-    private GameObject FindPartPrefabByName(string name)
-    {
-        foreach (GameObject prefab in availableParts)
-        {
-            if (prefab.name == name)
-                return prefab;
-        }
-        return null;
-    }
 
     private void ActivateRigidbody()
     {
@@ -185,5 +185,17 @@ public class RobotManager : MonoBehaviour
                 rb2D.simulated = true;
             }
         }
+    }
+
+    private GameObject FindPartPrefabByName(string name)
+    {
+        foreach (GameObject prefab in availableParts)
+        {
+            if (prefab.name.Equals(name, System.StringComparison.OrdinalIgnoreCase))
+                return prefab;
+        }
+
+        Debug.LogWarning($"Part prefab '{name}' not found in availableParts list!");
+        return null;
     }
 }
