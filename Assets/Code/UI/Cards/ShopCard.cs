@@ -25,6 +25,7 @@ public class ShopCard : MonoBehaviour
         if (resourceManager.Scrap >= price)
         {
             PartData newPart = new PartData(partName);
+            newPart.isDeployed = false;
             inventory.AddPartToInventory(newPart);
             inventory.SaveInventory();
             Debug.Log($"Bought and stored: {newPart.partName}");

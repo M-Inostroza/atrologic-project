@@ -121,13 +121,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2742037859127698353}
         m_TargetAssemblyTypeName: PartCard, Assembly-CSharp
-        m_MethodName: BuyPart
-        m_Mode: 2
+        m_MethodName: ModifyDeployedPart
+        m_Mode: 1
         m_Arguments:
-          m_ObjectArgument: {fileID: -6110025050956992082, guid: 819b337c55973b746a1eeac95016f8af, type: 3}
-          m_ObjectArgumentAssemblyTypeName: Part, Assembly-CSharp
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -767,6 +767,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardName: {fileID: 4265400244308809259}
+  deployButton: {fileID: 3640800975649276371}
+  modifyButton: {fileID: 6218179001263072466}
 --- !u!1 &6055463758609606673
 GameObject:
   m_ObjectHideFlags: 0
