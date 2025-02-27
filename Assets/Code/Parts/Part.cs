@@ -1,10 +1,11 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Part : MonoBehaviour
 {
     public Transform attachmentPoint;
     public bool isAttached;
-    public string prefabID;
+    string prefabID;
 
     protected bool isDragging = false;
     private Vector3 offset;
@@ -51,6 +52,8 @@ public class Part : MonoBehaviour
     public void OnMouseDown()
     {
         isDragging = true;
+
+        Debug.Log("This is the prefab id: " + prefabID);
 
         if (isAttached)
         {
@@ -111,12 +114,35 @@ public class Part : MonoBehaviour
 
     void Recycle()
     {
-        gameObject.SetActive(false);
-        gameObject.transform.position = new Vector3(12.8f, -7f, 0f);
-
-        //FindFirstObjectByType<Workshop>().PopulateGrid();
-
         Debug.Log($"{name} was recycled and can now be deployed again.");
+
+        InventoryManager inventoryManager = FindFirstObjectByType<InventoryManager>();
+
+        if (inventoryManager != null)
+        {
+            // Itera sobre las PartCards en el InventoryManager
+            foreach (Transform child in inventoryManager.transform)
+            {
+                PartCard partCard = child.GetComponent<PartCard>();
+                Debug.Log($"Checking {partCard.GetIDFromCard()} against {prefabID}");
+                
+                if (partCard != null && partCard.GetIDFromCard() == prefabID)
+                {
+                    Debug.Log($"Ids match: YES");
+                    partCard.Undeploy();
+                    break;
+                } else
+                {
+                    Debug.Log($"Ids match: NO");
+                }
+            }
+        }
+        else
+        {
+            Debug.Log("Inventory manager is null, check!");
+        }
+        
+        Destroy(gameObject);
     }
 
     private Vector3 GetMouseWorldPosition()
@@ -124,5 +150,15 @@ public class Part : MonoBehaviour
         Vector3 mousePoint = Input.mousePosition;
         mousePoint.z = Camera.main.WorldToScreenPoint(gameObject.transform.position).z;
         return Camera.main.ScreenToWorldPoint(mousePoint);
+    }
+
+    public void SetPrefabID(string id)
+    {
+        prefabID = id;
+    }
+
+    public string GetPrefabID()
+    {
+        return prefabID;
     }
 }

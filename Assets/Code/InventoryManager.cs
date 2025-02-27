@@ -54,6 +54,12 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
+    public void ClearInventory()
+    {
+        partList.Clear();
+        SaveInventory();
+    }
+
     void CreateCard(PartData part)
     {
         GameObject cardObj = Instantiate(partCardPrefab, transform);
@@ -62,6 +68,11 @@ public class InventoryManager : MonoBehaviour
         {
             newCard.SetPart(part);
         }
+    }
+
+    public List<PartData> GetParts()
+    {
+        return partList;
     }
 
     private void OnApplicationQuit()
