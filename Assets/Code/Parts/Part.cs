@@ -9,13 +9,14 @@ public class Part : MonoBehaviour
 
     protected bool isDragging = false;
     private Vector3 offset;
-    
 
+    InventoryManager inventoryManager;
     RectTransform recycleIcon;
     Core core;
 
     public void Start()
     {
+        inventoryManager = FindFirstObjectByType<InventoryManager>();
         core = FindFirstObjectByType<Core>();
 
         CheckInitialAttachment();
@@ -103,6 +104,12 @@ public class Part : MonoBehaviour
         transform.localPosition = Vector3.zero;
         transform.localRotation = Quaternion.identity;
         isAttached = true;
+
+        PartCard partCard = FindPartCardByID(prefabID);
+        if (partCard != null)
+        {
+            partCard.AttachToRobot(attachmentPoint);
+        }
     }
 
     public void Detach()
@@ -110,39 +117,49 @@ public class Part : MonoBehaviour
         core.SetAttachmentPointStatus(transform.parent.transform, false);
         transform.SetParent(null);
         isAttached = false;
+
+        PartCard partCard = FindPartCardByID(prefabID);
+        if (partCard != null)
+        {
+            partCard.DetachFromRobot();
+        }
     }
 
     void Recycle()
     {
         Debug.Log($"{name} was recycled and can now be deployed again.");
 
-        InventoryManager inventoryManager = FindFirstObjectByType<InventoryManager>();
+        PartCard partCard = FindPartCardByID(prefabID);
 
-        if (inventoryManager != null)
+        if (partCard != null)
         {
-            // Itera sobre las PartCards en el InventoryManager
-            foreach (Transform child in inventoryManager.transform)
+            partCard.Undeploy();
+        }
+
+        Destroy(gameObject);
+    }
+
+    private PartCard FindPartCardByID(string targetID)
+    {
+        if (inventoryManager == null)
+        {
+            Debug.LogError("Inventory Manager is null!");
+            return null;
+        }
+
+        foreach (Transform child in inventoryManager.transform)
+        {
+            PartCard partCard = child.GetComponent<PartCard>();
+
+            if (partCard != null && partCard.GetIDFromCard() == targetID)
             {
-                PartCard partCard = child.GetComponent<PartCard>();
-                Debug.Log($"Checking {partCard.GetIDFromCard()} against {prefabID}");
-                
-                if (partCard != null && partCard.GetIDFromCard() == prefabID)
-                {
-                    Debug.Log($"Ids match: YES");
-                    partCard.Undeploy();
-                    break;
-                } else
-                {
-                    Debug.Log($"Ids match: NO");
-                }
+                Debug.Log($"PartCard with ID {targetID} found.");
+                return partCard;
             }
         }
-        else
-        {
-            Debug.Log("Inventory manager is null, check!");
-        }
-        
-        Destroy(gameObject);
+
+        Debug.LogWarning($"PartCard with ID {targetID} not found.");
+        return null;
     }
 
     private Vector3 GetMouseWorldPosition()
