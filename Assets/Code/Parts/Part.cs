@@ -178,4 +178,18 @@ public class Part : MonoBehaviour
     {
         return prefabID;
     }
+
+    public void DestroyRougue()
+    {
+        PartCard partCard = FindPartCardByID(prefabID);
+
+        if (partCard != null)
+        {
+            partCard.Undeploy();
+        }
+        if (!isAttached)
+        {
+            Destroy(gameObject);
+        }
+    }
 }

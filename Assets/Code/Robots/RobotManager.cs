@@ -14,7 +14,7 @@ public class RobotManager : MonoBehaviour
 
         if (ES3.KeyExists("RobotPosition"))
         {
-            LoadRobotState(spawnPoint); // Load Robot from ES3
+            LoadRobotState(spawnPoint);
             ActivateRigidbody();
         }
         else
@@ -28,13 +28,14 @@ public class RobotManager : MonoBehaviour
         if (ES3.KeyExists("RobotPosition"))
         {
             LoadRobotState();
+            robotInstance.GetComponent<BoxCollider2D>().enabled = false;
         }
         else
         {
             Vector3 position = new Vector3(x, y, 0);
             robotInstance = Instantiate(robotModel.prefab, position, Quaternion.identity);
             robotModel.InitializeAttachmentPoints(robotInstance);
-
+            robotInstance.GetComponent<BoxCollider2D>().enabled = false;
             SaveRobotState();
         }
     }
@@ -84,7 +85,6 @@ public class RobotManager : MonoBehaviour
         List<PartData> attachedParts = new List<PartData>();
 
         Core core = robotInstance.GetComponentInChildren<Core>();
-
         if (core != null)
         {
             var attachmentPointsStatus = core.GetAttachmentPointsStatus();
@@ -93,17 +93,17 @@ public class RobotManager : MonoBehaviour
 
         foreach (Transform point in robotInstance.transform)
         {
-            foreach (Transform partTransform in point) // Go one level deeper
+            foreach (Transform partTransform in point)
             {
                 Part partComponent = partTransform.GetComponent<Part>();
-                Debug.Log(partComponent + "LOOGIIN");
+
                 if (partComponent != null)
                 {
-                    Debug.Log($"Saving Part: {partComponent.name}");
-                    // Correctly create a new PartData instance
+                    // Store data
                     PartData data = new PartData(partComponent.name)
                     {
                         isDeployed = true,
+                        partID = partComponent.GetPrefabID(),
                         isActive = partComponent.gameObject.activeSelf,
                         localPosition = partTransform.localPosition,
                         localRotation = partTransform.localRotation,
@@ -111,7 +111,6 @@ public class RobotManager : MonoBehaviour
                     };
 
                     attachedParts.Add(data);
-                    Debug.Log($"Part {data} saved.");
                 }
             }
         }
@@ -126,10 +125,9 @@ public class RobotManager : MonoBehaviour
         if (!ES3.KeyExists("RobotAttachedTransforms")) return;
 
         List<PartData> attachedParts = ES3.Load<List<PartData>>("RobotAttachedTransforms");
-        Debug.Log($"Loading {attachedParts.Count} parts.");
+
         foreach (PartData data in attachedParts)
         {
-            Debug.Log($"Trying to load Part: {data.partName} from Resources");
             Transform parent = FindChildByName(robotInstance.transform, data.attachmentPointName);
             if (parent != null)
             {
@@ -145,6 +143,7 @@ public class RobotManager : MonoBehaviour
                     Part partComponent = newPart.GetComponent<Part>();
                     if (partComponent != null)
                     {
+                        partComponent.SetPrefabID(data.partID);
                         partComponent.isAttached = true;
                     }
                     else

@@ -29,5 +29,21 @@ public class Workshop : MonoBehaviour
         {
             workshopCollider.enabled = true;
         }
+
+        DestroyRougueParts();
+    }
+
+    void DestroyRougueParts()
+    {
+        Part[] allParts = FindObjectsOfType<Part>();
+
+        foreach (Part part in allParts)
+        {
+            if (part.transform.parent == null) // If it has no parent, destroy it
+            {
+                Debug.Log($"Destroying orphaned part: {part.name}");
+                part.DestroyRougue();
+            }
+        }
     }
 }

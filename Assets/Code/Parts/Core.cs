@@ -55,6 +55,7 @@ public class Core : MonoBehaviour
                     attachmentPointStatus[attachmentPoint] = false;
                 }
             }
+
         }
         else
         {
@@ -65,6 +66,21 @@ public class Core : MonoBehaviour
     public void SetAttachmentPointStatus(Transform attachmentPoint, bool status)
     {
         attachmentPointStatus[attachmentPoint] = status;
+        SetStatusColors(attachmentPoint, status);
+    }
+
+    void SetStatusColors(Transform attachmentPoint, bool status)
+    {
+        SpriteRenderer spriteRenderer = attachmentPoint.GetComponent<SpriteRenderer>();
+
+        if (spriteRenderer != null)
+        {
+            spriteRenderer.color = status ? Color.red : Color.green;
+        }
+        else
+        {
+            Debug.LogWarning($"No SpriteRenderer found on {attachmentPoint.name}");
+        }
     }
 
     public void ResetPointStatus()
