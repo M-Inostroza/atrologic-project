@@ -13,6 +13,16 @@ public class PartCard : MonoBehaviour
 
     PartData partData;
 
+    private void Start()
+    {
+        if (partData.isDeployed && !partData.isAtached)
+        {
+            Debug.Log("Quit and deployed: " + partData.isDeployed + " atached?: " + partData.isAtached);
+            partData.isDeployed = false;
+            deployButton.interactable = true;
+        }
+    }
+
     public void SetPart(PartData newData)
     {
         partData = newData;

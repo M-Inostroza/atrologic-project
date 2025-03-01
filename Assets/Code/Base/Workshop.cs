@@ -19,9 +19,7 @@ public class Workshop : MonoBehaviour
         {
             workshopCollider.enabled = false;
         }
-        //PopulateGrid();
         robotManager.ShowPreview(previewX, previewY);
-        
     }
 
     private void OnDisable()
@@ -32,25 +30,4 @@ public class Workshop : MonoBehaviour
             workshopCollider.enabled = true;
         }
     }
-
-
-    //public void PopulateGrid()
-    //{
-    //    foreach (Transform child in cardGrid)
-    //    {
-    //        Destroy(child.gameObject);
-    //    }
-
-    //    foreach (PartData part in inventoryManager.GetParts())
-    //    {
-    //        GameObject cardObj = Instantiate(partCardPrefab, cardGrid);
-    //        PartCard newCard = cardObj.GetComponent<PartCard>();
-
-    //        if (newCard != null)
-    //        {
-    //            newCard.InitializeCard(part);
-    //        }
-    //    }
-    //}
-
 }

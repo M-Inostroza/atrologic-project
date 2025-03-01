@@ -30,7 +30,8 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public string GetCurrentSceneName()
+
+public string GetCurrentSceneName()
     {
         return SceneManager.GetActiveScene().name;
     }

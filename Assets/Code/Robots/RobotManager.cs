@@ -96,8 +96,10 @@ public class RobotManager : MonoBehaviour
             foreach (Transform partTransform in point) // Go one level deeper
             {
                 Part partComponent = partTransform.GetComponent<Part>();
+                Debug.Log(partComponent + "LOOGIIN");
                 if (partComponent != null)
                 {
+                    Debug.Log($"Saving Part: {partComponent.name}");
                     // Correctly create a new PartData instance
                     PartData data = new PartData(partComponent.name)
                     {
@@ -109,6 +111,7 @@ public class RobotManager : MonoBehaviour
                     };
 
                     attachedParts.Add(data);
+                    Debug.Log($"Part {data} saved.");
                 }
             }
         }
@@ -123,7 +126,7 @@ public class RobotManager : MonoBehaviour
         if (!ES3.KeyExists("RobotAttachedTransforms")) return;
 
         List<PartData> attachedParts = ES3.Load<List<PartData>>("RobotAttachedTransforms");
-
+        Debug.Log($"Loading {attachedParts.Count} parts.");
         foreach (PartData data in attachedParts)
         {
             Debug.Log($"Trying to load Part: {data.partName} from Resources");
