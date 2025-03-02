@@ -5,6 +5,7 @@ public class Part : MonoBehaviour
 {
     public Transform attachmentPoint;
     public bool isAttached;
+
     string prefabID;
 
     protected bool isDragging = false;

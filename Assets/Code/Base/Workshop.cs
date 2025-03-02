@@ -6,10 +6,6 @@ public class Workshop : MonoBehaviour
     [SerializeField] RobotManager robotManager;
     [SerializeField] InventoryManager inventoryManager;
 
-    // Coordinates for preview
-    private float previewX = 13.46f;
-    private float previewY = -5.131f;
-
     [SerializeField] private BoxCollider2D workshopCollider;
     [SerializeField] private Transform cardGrid;
     [SerializeField] private GameObject ModifyPanel;
@@ -20,7 +16,7 @@ public class Workshop : MonoBehaviour
         {
             workshopCollider.enabled = false;
         }
-        robotManager.ShowPreview(previewX, previewY);
+        robotManager.ShowPreview();
     }
 
     private void OnDisable()

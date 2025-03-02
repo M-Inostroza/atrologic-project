@@ -15,14 +15,18 @@ public class PartCard : MonoBehaviour
     PartData partData;
     Workshop workshop;
 
+    
     private void Start()
     {
         if (partData.isDeployed && !partData.isAtached)
         {
-            Debug.Log("Quit and deployed: " + partData.isDeployed + " atached?: " + partData.isAtached);
             partData.isDeployed = false;
             deployButton.interactable = true;
         }
+
+        workshop = FindObjectOfType<Workshop>();
+
+        modifyButton.onClick.AddListener(ModifyDeployedPart);
     }
 
     public void SetPart(PartData newData)

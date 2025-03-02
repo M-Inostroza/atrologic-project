@@ -12,6 +12,7 @@ public class PartData
     public string attachmentPointName;
     public string partID;
 
+
     // Constructor for new parts
     public PartData(string name)
     {

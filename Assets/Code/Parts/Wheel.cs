@@ -1,12 +1,18 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Wheel : Part
 {
     private Rigidbody2D rb2D;
     private GameManager gameManager;
+    private ResourceManager resourceManager;
+
+    private float rotationSpeed = 1.6f;
+    private float energyConsumptionPerRotation = .1f;
+
     private void Awake()
     {
         gameManager = FindFirstObjectByType<GameManager>();
+        resourceManager = FindFirstObjectByType<ResourceManager>();
     }
 
     private new void Start()
@@ -22,7 +28,7 @@ public class Wheel : Part
 
     private void FixedUpdate()
     {
-        RotateWheel(1.6f);
+        RotateWheel(rotationSpeed);
     }
 
     void SetWheel()
@@ -36,7 +42,7 @@ public class Wheel : Part
                 rb2D = gameObject.AddComponent<Rigidbody2D>();
             }
 
-            // Eliminate constrains
+            // Eliminate constraints
             rb2D.constraints = RigidbodyConstraints2D.None;
 
             Core core = FindFirstObjectByType<Core>();
@@ -57,11 +63,25 @@ public class Wheel : Part
             }
         }
     }
+
     public void RotateWheel(float speed)
     {
-        if (rb2D != null)
+        if (rb2D != null && resourceManager.Energy > 0)
         {
             rb2D.AddTorque(-speed);
+            ConsumeEnergy(1);
+        }
+    }
+
+    private void ConsumeEnergy(float energy)
+    {
+        if (resourceManager != null)
+        {
+            resourceManager.RemoveEnergy(energy);
         }
     }
 }
+
+
+
+

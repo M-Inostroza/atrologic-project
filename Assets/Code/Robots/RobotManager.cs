@@ -23,19 +23,22 @@ public class RobotManager : MonoBehaviour
         }
     }
 
-    public void ShowPreview(float x, float y)
+    public void ShowPreview()
     {
         if (ES3.KeyExists("RobotPosition"))
         {
+            Debug.Log("Script: RoboMnger - Loading robot");
             LoadRobotState();
             robotInstance.GetComponent<BoxCollider2D>().enabled = false;
         }
         else
         {
-            Vector3 position = new Vector3(x, y, 0);
+            Vector3 position = new Vector3(0, 0, 0);
             robotInstance = Instantiate(robotModel.prefab, position, Quaternion.identity);
             robotModel.InitializeAttachmentPoints(robotInstance);
             robotInstance.GetComponent<BoxCollider2D>().enabled = false;
+
+            Debug.Log("Script: RoboMnger - Instantiated: " + robotInstance.name);
             SaveRobotState();
         }
     }
@@ -47,6 +50,11 @@ public class RobotManager : MonoBehaviour
             SaveRobotState();
             Destroy(robotInstance);
         }
+    }
+
+    private void OnApplicationQuit()
+    {
+        SaveRobotState();
     }
 
     public void SaveRobotState()
@@ -63,17 +71,19 @@ public class RobotManager : MonoBehaviour
     {
         if (!ES3.KeyExists("RobotPosition")) return;
 
+        Debug.Log("From Load State: " + robotInstance);
         // Destroy any existing instance before loading
         if (robotInstance != null) Destroy(robotInstance);
 
-        Vector3 position = ES3.Load<Vector3>("RobotPosition");
+        Vector3 position = new Vector3(13.46f, -5.131f, 0);
 
-        // Instantiate the saved prefab with modifications
         if (spawnPosition != null) {
             robotInstance = Instantiate(robotModel.prefab, spawnPosition.position, Quaternion.identity);
+            Debug.Log("Spawn position found: " + robotInstance);
         } else
         {
             robotInstance = Instantiate(robotModel.prefab, position, Quaternion.identity);
+            Debug.Log("Spawn position not found: " + robotInstance + "deploying on position: " + position);
         }
         robotModel.InitializeAttachmentPoints(robotInstance);
 
@@ -125,7 +135,7 @@ public class RobotManager : MonoBehaviour
         if (!ES3.KeyExists("RobotAttachedTransforms")) return;
 
         List<PartData> attachedParts = ES3.Load<List<PartData>>("RobotAttachedTransforms");
-
+        Debug.Log($"Loading {attachedParts.Count} parts...");
         foreach (PartData data in attachedParts)
         {
             Transform parent = FindChildByName(robotInstance.transform, data.attachmentPointName);

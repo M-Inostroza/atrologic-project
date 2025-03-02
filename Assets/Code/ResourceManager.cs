@@ -6,12 +6,12 @@ public class ResourceManager : MonoBehaviour
     private int scrap;
     private TMP_Text scrapCounter;
 
-    private int energy;
+    private float energy;
     private int energyCap = 800;
     private int energyGain = 40;
     private TMP_Text energyCounter;
 
-    public int Energy
+    public float Energy
     {
         get { return energy; }
         private set
@@ -84,6 +84,20 @@ public class ResourceManager : MonoBehaviour
         }
     }
 
+    public void RemoveEnergy(float amount)
+    {
+        if (Energy >= amount)
+        {
+            Energy -= amount * Time.deltaTime;
+            SaveEnergy();
+            UpdateEnergyCounter();
+        }
+        else
+        {
+            Debug.LogWarning("Not enough Energy to remove.");
+        }
+    }
+
     public void RemoveScrap(int amount)
     {
         if (Scrap >= amount)
@@ -151,7 +165,7 @@ public class ResourceManager : MonoBehaviour
     {
         if (ES3.KeyExists("Energy"))
         {
-            Energy = ES3.Load<int>("Energy");
+            Energy = ES3.Load<float>("Energy");
             UpdateEnergyCounter();
         }
         else
