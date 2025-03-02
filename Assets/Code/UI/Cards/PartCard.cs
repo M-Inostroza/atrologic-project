@@ -9,9 +9,11 @@ public class PartCard : MonoBehaviour
     [SerializeField] private UnityEngine.UI.Button deployButton;
     [SerializeField] private UnityEngine.UI.Button modifyButton;
 
+
     string cardID;
 
     PartData partData;
+    Workshop workshop;
 
     private void Start()
     {
@@ -62,21 +64,7 @@ public class PartCard : MonoBehaviour
 
     public void ModifyDeployedPart()
     {
-        if (partData.isDeployed)
-        {
-            // 🔹 Find the deployed part in the scene
-            GameObject deployedPart = GameObject.Find(partData.partName);
-
-            if (deployedPart != null)
-            {
-                deployedPart.GetComponent<SpriteRenderer>().color = Color.red;
-                Debug.Log($"Modified {partData.partName}");
-            }
-            else
-            {
-                Debug.LogWarning("No deployed part found!");
-            }
-        }
+        workshop.ActivateModifyPanel();
     }
 
     public void DebugPart()

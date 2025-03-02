@@ -12,6 +12,7 @@ public class Workshop : MonoBehaviour
 
     [SerializeField] private BoxCollider2D workshopCollider;
     [SerializeField] private Transform cardGrid;
+    [SerializeField] private GameObject ModifyPanel;
 
     private void OnEnable()
     {
@@ -45,5 +46,10 @@ public class Workshop : MonoBehaviour
                 part.DestroyRougue();
             }
         }
+    }
+
+    public void ActivateModifyPanel()
+    {
+        ModifyPanel.SetActive(true);
     }
 }
