@@ -130,7 +130,7 @@ public class ResourceManager : MonoBehaviour
     {
         if (energyCounter != null)
         {
-            energyCounter.text = Energy.ToString();
+            energyCounter.text = ((int)Energy).ToString();
         }
         else 
         {
