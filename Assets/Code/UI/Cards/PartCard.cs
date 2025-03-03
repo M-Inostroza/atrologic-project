@@ -15,7 +15,6 @@ public class PartCard : MonoBehaviour
     PartData partData;
     Workshop workshop;
 
-    
     private void Start()
     {
         if (partData.isDeployed && !partData.isAtached)
@@ -24,7 +23,7 @@ public class PartCard : MonoBehaviour
             deployButton.interactable = true;
         }
 
-        workshop = FindObjectOfType<Workshop>();
+        workshop = FindFirstObjectByType<Workshop>();
 
         modifyButton.onClick.AddListener(ModifyDeployedPart);
     }
@@ -34,6 +33,7 @@ public class PartCard : MonoBehaviour
         partData = newData;
         cardName.text = partData.partName;
         cardID = partData.partID;
+        SetEnergyUsage(partData.partName);
 
         deployButton.interactable = !partData.isDeployed;
     }
@@ -68,7 +68,7 @@ public class PartCard : MonoBehaviour
 
     public void ModifyDeployedPart()
     {
-        workshop.ActivateModifyPanel();
+        workshop.ActivateModifyPanel(partData.energyUsage);
     }
 
     public void DebugPart()
@@ -78,6 +78,19 @@ public class PartCard : MonoBehaviour
         Debug.Log("Part ID: " + partData.partID);
         Debug.Log("Part name: " + partData.partName);
         Debug.Log("Attached?: " + partData.isAtached);
+    }
+
+    void SetEnergyUsage(string partName)
+    {
+        // Per second on
+        switch (partName)
+        {
+            case "Wheel":
+                partData.energyUsage = 1;
+                break;
+            default:
+                break;
+        }
     }
 
     public string GetIDFromCard()

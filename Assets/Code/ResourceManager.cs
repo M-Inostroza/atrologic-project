@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using DG.Tweening;
 
 public class ResourceManager : MonoBehaviour
 {
@@ -70,7 +71,7 @@ public class ResourceManager : MonoBehaviour
         UpdateScrapCounter();
     }
 
-    public void AddEnergy(int amount)
+    public void AddEnergy(float amount)
     {
         if (Energy + amount <= energyCap)
         {
@@ -89,7 +90,8 @@ public class ResourceManager : MonoBehaviour
         if (Energy >= amount)
         {
             Energy -= amount * Time.deltaTime;
-            SaveEnergy();
+            // remove energy with do tween
+            
             UpdateEnergyCounter();
         }
         else
@@ -143,7 +145,7 @@ public class ResourceManager : MonoBehaviour
         ES3.Save("Scrap", Scrap);
     }
 
-    private void SaveEnergy()
+    public void SaveEnergy()
     {
         ES3.Save("Energy", Energy);
     }

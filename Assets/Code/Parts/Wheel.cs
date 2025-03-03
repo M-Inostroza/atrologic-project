@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class Wheel : Part
 {
@@ -7,7 +8,6 @@ public class Wheel : Part
     private ResourceManager resourceManager;
 
     private float rotationSpeed = 1.6f;
-    private float energyConsumptionPerRotation = .1f;
 
     private void Awake()
     {
@@ -68,16 +68,12 @@ public class Wheel : Part
     {
         if (rb2D != null && resourceManager.Energy > 0)
         {
+            if (resourceManager.Energy == 0)
+            {
+                Debug.Log("no energy");
+            }
             rb2D.AddTorque(-speed);
-            ConsumeEnergy(1);
-        }
-    }
-
-    private void ConsumeEnergy(float energy)
-    {
-        if (resourceManager != null)
-        {
-            resourceManager.RemoveEnergy(energy);
+            resourceManager.RemoveEnergy(1);
         }
     }
 }

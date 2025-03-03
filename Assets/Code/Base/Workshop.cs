@@ -1,4 +1,5 @@
 
+using TMPro;
 using UnityEngine;
 
 public class Workshop : MonoBehaviour
@@ -9,6 +10,7 @@ public class Workshop : MonoBehaviour
     [SerializeField] private BoxCollider2D workshopCollider;
     [SerializeField] private Transform cardGrid;
     [SerializeField] private GameObject ModifyPanel;
+    [SerializeField] private TMP_Text[] statPanels;
 
     private void OnEnable()
     {
@@ -44,8 +46,10 @@ public class Workshop : MonoBehaviour
         }
     }
 
-    public void ActivateModifyPanel()
+    public void ActivateModifyPanel(int energyUsage)
     {
         ModifyPanel.SetActive(true);
+        // Fill the stats panels
+        statPanels[0].text = energyUsage.ToString() + "/s";
     }
 }

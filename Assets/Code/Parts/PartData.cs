@@ -11,6 +11,7 @@ public class PartData
     public Quaternion localRotation;
     public string attachmentPointName;
     public string partID;
+    public int energyUsage;
 
 
     // Constructor for new parts
@@ -22,6 +23,7 @@ public class PartData
         isActive = false;
         localPosition = Vector3.zero;
         localRotation = Quaternion.identity;
+        energyUsage = 0;
         attachmentPointName = "";
         partID = System.Guid.NewGuid().ToString();
     }
