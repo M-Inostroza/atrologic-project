@@ -904,6 +904,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardName: {fileID: 4265400244308809259}
+  cardSprite: {fileID: 7368379855668906253}
   deployButton: {fileID: 3640800975649276371}
   modifyButton: {fileID: 6218179001263072466}
 --- !u!1 &6055463758609606673

@@ -64,14 +64,12 @@ public class Wheel : Part
         }
     }
 
+    // power mode: if enery is less than 20% of the allowed level, the wheel will rotate slower
+
     public void RotateWheel(float speed)
     {
-        if (rb2D != null && resourceManager.Energy > 0)
+        if (rb2D != null && resourceManager.Energy >= 1)
         {
-            if (resourceManager.Energy == 0)
-            {
-                Debug.Log("no energy");
-            }
             rb2D.AddTorque(-speed);
             resourceManager.RemoveEnergy(1);
         }

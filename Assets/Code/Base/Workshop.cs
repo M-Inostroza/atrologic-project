@@ -46,7 +46,7 @@ public class Workshop : MonoBehaviour
         }
     }
 
-    public void ActivateModifyPanel(int energyUsage)
+    public void ActivateModifyPanel(float energyUsage)
     {
         ModifyPanel.SetActive(true);
         // Fill the stats panels

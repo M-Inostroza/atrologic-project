@@ -1,10 +1,14 @@
 ﻿using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PartCard : MonoBehaviour
 {
     [SerializeField]
     private TMP_Text cardName;
+
+    [SerializeField]
+    private Image cardSprite;
 
     [SerializeField] private UnityEngine.UI.Button deployButton;
     [SerializeField] private UnityEngine.UI.Button modifyButton;
@@ -31,6 +35,7 @@ public class PartCard : MonoBehaviour
     public void SetPart(PartData newData)
     {
         partData = newData;
+        cardSprite.sprite = Resources.Load<Sprite>($"Sprites/Parts/{partData.partName}");
         cardName.text = partData.partName;
         cardID = partData.partID;
         SetEnergyUsage(partData.partName);
@@ -87,6 +92,9 @@ public class PartCard : MonoBehaviour
         {
             case "Wheel":
                 partData.energyUsage = 1;
+                break;
+            case "Sensor":
+                partData.energyUsage = 0.5f;
                 break;
             default:
                 break;

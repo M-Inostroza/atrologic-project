@@ -11,7 +11,7 @@ public class PartData
     public Quaternion localRotation;
     public string attachmentPointName;
     public string partID;
-    public int energyUsage;
+    public float energyUsage;
 
 
     // Constructor for new parts

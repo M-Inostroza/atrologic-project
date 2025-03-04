@@ -56,7 +56,7 @@ public class Part : MonoBehaviour
         isDragging = true;
 
         Debug.Log("This is the prefab id: " + prefabID);
-
+        
         if (isAttached)
         {
             if (core != null)
@@ -67,6 +67,7 @@ public class Part : MonoBehaviour
         else
         {
             offset = transform.position - GetMouseWorldPosition();
+            Debug.Log("Offset: " + offset);
         }
     }
 
