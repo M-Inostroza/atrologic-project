@@ -7,7 +7,9 @@ public class Wheel : Part
     private GameManager gameManager;
     private ResourceManager resourceManager;
 
-    private float rotationSpeed = 1.6f;
+    private float rotationSpeedEco = 1.2f;
+    private float rotationSpeedNormal = 1.6f;
+    private float rotationSpeedSport = 2f;
 
     private void Awake()
     {
@@ -28,7 +30,7 @@ public class Wheel : Part
 
     private void FixedUpdate()
     {
-        RotateWheel(rotationSpeed);
+        RotateWheel();
     }
 
     void SetWheel()
@@ -66,11 +68,11 @@ public class Wheel : Part
 
     // power mode: if enery is less than 20% of the allowed level, the wheel will rotate slower
 
-    public void RotateWheel(float speed)
+    public void RotateWheel()
     {
         if (rb2D != null && resourceManager.Energy >= 1)
         {
-            rb2D.AddTorque(-speed);
+            rb2D.AddTorque(-rotationSpeedNormal);
             resourceManager.RemoveEnergy(1);
         }
     }

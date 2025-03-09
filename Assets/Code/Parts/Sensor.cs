@@ -1,9 +1,13 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class Sensor : Part
 {
     private Vector2 direction = Vector2.right;
     private RaycastHit2D hit;
+
+    public static event Action<float> OnAngleDetected;
 
     private new void Update() // This is avoiding the part update to exe, check the wheel use to find solution, then keep testing the laser
     {
@@ -13,7 +17,7 @@ public class Sensor : Part
 
     private void DetectObjectToRight()
     {
-        direction = transform.right; // Always points to the right
+        direction = transform.right;
 
         RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, direction, 10);
 
@@ -23,48 +27,19 @@ public class Sensor : Part
 
             if (hit.collider.CompareTag("Player") || hit.collider.CompareTag("Resource"))
             {
-                continue; // Ignore these objects
+                continue;
             }
 
-            // ✅ Store the valid hit
-            this.hit = hit;
+            Vector2 normal = hit.normal;
+            float angle = Vector2.SignedAngle(Vector2.up, normal);
 
-            if (hit.collider.gameObject != gameObject && hit.collider.name == "Ground")
-            {
-                // ✅ Fix: Ensure hit.point is valid before calculations
-                if (hit.point == Vector2.zero)
-                {
-                    Debug.LogWarning("Hit point is zero, skipping calculation.");
-                    continue;
-                }
+            angle = Mathf.Abs(angle);
 
-                // ✅ Fix: Calculate the direction from sensor to hit point
-                Vector2 hitDirection = ((Vector2)hit.point - (Vector2)transform.position).normalized;
+            Debug.Log($"Detected object: {hit.collider.name}, Surface Angle: {angle} degrees");
 
-                // ✅ Fix: Compare transform's right direction with the hit direction
-                float angle = Vector2.SignedAngle(transform.right, hitDirection);
+            OnAngleDetected?.Invoke(angle);
 
-                Debug.Log($"Detected object: {hit.collider.name}, Angle: {angle} degrees");
-            }
+            return;
         }
     }
-
-    private void OnDrawGizmos()
-    {
-        if (!Application.isPlaying) return;
-
-        Debug.DrawRay(transform.position, direction * 10, Color.red);
-
-        Gizmos.color = Color.red;
-        Gizmos.DrawRay(transform.position, direction * 10);
-
-        if (hit.collider != null && hit.collider.name == "Ground")
-        {
-            Gizmos.color = Color.green;
-            Gizmos.DrawSphere(hit.point, 0.2f);
-
-            Debug.DrawRay(hit.point, Vector3.up * 0.5f, Color.green);
-        }
-    }
-
 }
