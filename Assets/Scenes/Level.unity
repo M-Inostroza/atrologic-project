@@ -472,7 +472,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7545356594779528566, guid: 2956792eef1a8ae47a8600da5c82da83, type: 3}
       propertyPath: m_Name
-      value: Scrap (23)
+      value: Scrap
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -538,7 +538,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7545356594779528566, guid: 2956792eef1a8ae47a8600da5c82da83, type: 3}
       propertyPath: m_Name
-      value: Scrap (10)
+      value: Scrap
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1017,7 +1017,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7545356594779528566, guid: 2956792eef1a8ae47a8600da5c82da83, type: 3}
       propertyPath: m_Name
-      value: Scrap (9)
+      value: Scrap
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1546,7 +1546,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7545356594779528566, guid: 2956792eef1a8ae47a8600da5c82da83, type: 3}
       propertyPath: m_Name
-      value: Scrap (14)
+      value: Scrap
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1678,7 +1678,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7545356594779528566, guid: 2956792eef1a8ae47a8600da5c82da83, type: 3}
       propertyPath: m_Name
-      value: Scrap (18)
+      value: Scrap
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3076,7 +3076,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7545356594779528566, guid: 2956792eef1a8ae47a8600da5c82da83, type: 3}
       propertyPath: m_Name
-      value: Scrap (11)
+      value: Scrap
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3292,7 +3292,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7545356594779528566, guid: 2956792eef1a8ae47a8600da5c82da83, type: 3}
       propertyPath: m_Name
-      value: Scrap (22)
+      value: Scrap
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3563,7 +3563,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7545356594779528566, guid: 2956792eef1a8ae47a8600da5c82da83, type: 3}
       propertyPath: m_Name
-      value: Scrap (20)
+      value: Scrap
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5310,7 +5310,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7545356594779528566, guid: 2956792eef1a8ae47a8600da5c82da83, type: 3}
       propertyPath: m_Name
-      value: Scrap (15)
+      value: Scrap
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5644,7 +5644,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7545356594779528566, guid: 2956792eef1a8ae47a8600da5c82da83, type: 3}
       propertyPath: m_Name
-      value: Scrap (21)
+      value: Scrap
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5925,7 +5925,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7545356594779528566, guid: 2956792eef1a8ae47a8600da5c82da83, type: 3}
       propertyPath: m_Name
-      value: Scrap (7)
+      value: Scrap
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -8230,7 +8230,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7545356594779528566, guid: 2956792eef1a8ae47a8600da5c82da83, type: 3}
       propertyPath: m_Name
-      value: Scrap (24)
+      value: Scrap
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -9032,7 +9032,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7545356594779528566, guid: 2956792eef1a8ae47a8600da5c82da83, type: 3}
       propertyPath: m_Name
-      value: Scrap (6)
+      value: Scrap
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -9103,7 +9103,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7545356594779528566, guid: 2956792eef1a8ae47a8600da5c82da83, type: 3}
       propertyPath: m_Name
-      value: Scrap (19)
+      value: Scrap
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -10176,7 +10176,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7545356594779528566, guid: 2956792eef1a8ae47a8600da5c82da83, type: 3}
       propertyPath: m_Name
-      value: Scrap (13)
+      value: Scrap
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -10369,7 +10369,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7545356594779528566, guid: 2956792eef1a8ae47a8600da5c82da83, type: 3}
       propertyPath: m_Name
-      value: Scrap (12)
+      value: Scrap
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -10934,7 +10934,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7545356594779528566, guid: 2956792eef1a8ae47a8600da5c82da83, type: 3}
       propertyPath: m_Name
-      value: Scrap (25)
+      value: Scrap
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -11066,7 +11066,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7545356594779528566, guid: 2956792eef1a8ae47a8600da5c82da83, type: 3}
       propertyPath: m_Name
-      value: Scrap (17)
+      value: Scrap
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -11680,7 +11680,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7545356594779528566, guid: 2956792eef1a8ae47a8600da5c82da83, type: 3}
       propertyPath: m_Name
-      value: Scrap (16)
+      value: Scrap
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -11746,7 +11746,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7545356594779528566, guid: 2956792eef1a8ae47a8600da5c82da83, type: 3}
       propertyPath: m_Name
-      value: Scrap (8)
+      value: Scrap
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

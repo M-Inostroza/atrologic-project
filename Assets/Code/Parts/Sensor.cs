@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Sensor : Part
 {
@@ -7,41 +7,64 @@ public class Sensor : Part
 
     private new void Update() // This is avoiding the part update to exe, check the wheel use to find solution, then keep testing the laser
     {
+        base.Update();
         DetectObjectToRight();
     }
 
     private void DetectObjectToRight()
     {
-        // Define the direction to the right
-        direction = transform.right;
+        direction = transform.right; // Always points to the right
 
-        // Perform the raycast
-        hit = Physics2D.Raycast(transform.position, direction * 10);
+        RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, direction, 10);
 
-        //Debug.Log(hit.collider.name);
-        // Check if the raycast hit an object with the name "Ground"
-        if (hit.collider != null && hit.collider.gameObject != gameObject && hit.collider.name == "Ground")
+        foreach (RaycastHit2D hit in hits)
         {
-            // Calculate the angle between the sensor and the detected object
-            Vector2 toObject = hit.point - (Vector2)transform.position;
-            float angle = Vector2.Angle(direction, toObject);
+            if (hit.collider == null) continue;
 
-            // Log the detected object and the angle
-            Debug.Log($"Detected object: {hit.collider.name}, Angle: {angle} degrees");
+            if (hit.collider.CompareTag("Player") || hit.collider.CompareTag("Resource"))
+            {
+                continue; // Ignore these objects
+            }
+
+            // ✅ Store the valid hit
+            this.hit = hit;
+
+            if (hit.collider.gameObject != gameObject && hit.collider.name == "Ground")
+            {
+                // ✅ Fix: Ensure hit.point is valid before calculations
+                if (hit.point == Vector2.zero)
+                {
+                    Debug.LogWarning("Hit point is zero, skipping calculation.");
+                    continue;
+                }
+
+                // ✅ Fix: Calculate the direction from sensor to hit point
+                Vector2 hitDirection = ((Vector2)hit.point - (Vector2)transform.position).normalized;
+
+                // ✅ Fix: Compare transform's right direction with the hit direction
+                float angle = Vector2.SignedAngle(transform.right, hitDirection);
+
+                Debug.Log($"Detected object: {hit.collider.name}, Angle: {angle} degrees");
+            }
         }
     }
 
     private void OnDrawGizmos()
     {
-        // Draw the raycast in the Scene view and Game view
-        Gizmos.color = Color.red;
-        Gizmos.DrawRay(transform.position, direction * 10); // Adjust the length as needed
+        if (!Application.isPlaying) return;
 
-        // Draw a sphere at the hit point
+        Debug.DrawRay(transform.position, direction * 10, Color.red);
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawRay(transform.position, direction * 10);
+
         if (hit.collider != null && hit.collider.name == "Ground")
         {
             Gizmos.color = Color.green;
-            Gizmos.DrawSphere(hit.point, 0.2f); // Adjust the size as needed
+            Gizmos.DrawSphere(hit.point, 0.2f);
+
+            Debug.DrawRay(hit.point, Vector3.up * 0.5f, Color.green);
         }
     }
+
 }

@@ -27,7 +27,6 @@ public class RobotManager : MonoBehaviour
     {
         if (ES3.KeyExists("RobotPosition"))
         {
-            Debug.Log("Script: RoboMnger - Loading robot");
             LoadRobotState();
             robotInstance.GetComponent<BoxCollider2D>().enabled = false;
         }
@@ -38,7 +37,6 @@ public class RobotManager : MonoBehaviour
             robotModel.InitializeAttachmentPoints(robotInstance);
             robotInstance.GetComponent<BoxCollider2D>().enabled = false;
 
-            Debug.Log("Script: RoboMnger - Instantiated: " + robotInstance.name);
             SaveRobotState();
         }
     }
