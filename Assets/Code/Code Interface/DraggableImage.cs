@@ -5,8 +5,6 @@ using UnityEngine.UI;
 [RequireComponent(typeof(CanvasGroup))]
 public class DraggableImage : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
-    public BaseNode nodeData; // The data this image represents
-
     private CanvasGroup canvasGroup;
     private RectTransform rectTransform;
     private RectTransform parentCanvasRect; // The RectTransform of the Canvas

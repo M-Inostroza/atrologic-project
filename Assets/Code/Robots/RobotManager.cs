@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class RobotManager : MonoBehaviour
 {
@@ -70,22 +71,22 @@ public class RobotManager : MonoBehaviour
         if (!ES3.KeyExists("RobotPosition")) return;
 
         Debug.Log("From Load State: " + robotInstance);
-        // Destroy any existing instance before loading
+
+        // Destroy any existing
         if (robotInstance != null) Destroy(robotInstance);
 
+        // Position on screen
         Vector3 position = new Vector3(13.46f, -5.131f, 0);
 
         if (spawnPosition != null) {
             robotInstance = Instantiate(robotModel.prefab, spawnPosition.position, Quaternion.identity);
-            Debug.Log("Spawn position found: " + robotInstance);
         } else
         {
             robotInstance = Instantiate(robotModel.prefab, position, Quaternion.identity);
-            Debug.Log("Spawn position not found: " + robotInstance + "deploying on position: " + position);
         }
         robotModel.InitializeAttachmentPoints(robotInstance);
-
-        LoadParts();
+        Core core = robotInstance.GetComponentInChildren<Core>();
+        LoadParts(core);
     }
 
     private void SaveParts()
@@ -128,7 +129,7 @@ public class RobotManager : MonoBehaviour
     }
 
 
-    private void LoadParts()
+    private void LoadParts(Core core)
     {
         if (!ES3.KeyExists("RobotAttachedTransforms")) return;
 
@@ -136,6 +137,12 @@ public class RobotManager : MonoBehaviour
         Debug.Log($"Loading {attachedParts.Count} parts...");
         foreach (PartData data in attachedParts)
         {
+            Debug.Log($"Loading {data.partName}...");
+            if (data.partName == "s_Angle(Clone)")
+            {
+                core.activeSensors.Add("Angle");
+                Debug.Log($"Sensor type: Angle.");
+            }
             Transform parent = FindChildByName(robotInstance.transform, data.attachmentPointName);
             if (parent != null)
             {

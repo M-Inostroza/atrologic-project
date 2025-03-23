@@ -2,14 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum SensorType
+{
+    Angle,
+    Speed
+}
+
 public class Sensor : Part
 {
     private Vector2 direction = Vector2.right;
     private RaycastHit2D hit;
+    public SensorType sensorType = SensorType.Angle;
+
 
     public static event Action<float> OnAngleDetected;
 
-    private new void Update() // This is avoiding the part update to exe, check the wheel use to find solution, then keep testing the laser
+    private new void Update()
     {
         base.Update();
         DetectObjectToRight();

@@ -5,6 +5,7 @@ public class Core : MonoBehaviour
 {
     public Transform[] attachmentPoints;
     private Dictionary<Transform, bool> attachmentPointStatus;
+    public List<string> activeSensors = new List<string>();
 
     private void Awake()
     {
