@@ -21,7 +21,7 @@ public class PartCard : MonoBehaviour
 
     private void Start()
     {
-        if (partData.isDeployed && !partData.isAtached)
+        if (partData.isDeployed && !partData.isAttached)
         {
             partData.isDeployed = false;
             deployButton.interactable = true;
@@ -82,7 +82,7 @@ public class PartCard : MonoBehaviour
         Debug.Log("Point name: " + partData.attachmentPointName);
         Debug.Log("Part ID: " + partData.partID);
         Debug.Log("Part name: " + partData.partName);
-        Debug.Log("Attached?: " + partData.isAtached);
+        Debug.Log("Attached?: " + partData.isAttached);
     }
 
     void SetEnergyUsage(string partName)
@@ -114,13 +114,13 @@ public class PartCard : MonoBehaviour
 
     public void AttachToRobot(Transform point)
     {
-        partData.isAtached = true;
+        partData.isAttached = true;
         partData.attachmentPointName = point.name;
     }
 
     public void DetachFromRobot()
     {
-        partData.isAtached = false;
+        partData.isAttached = false;
         partData.attachmentPointName = "";
     }
 }

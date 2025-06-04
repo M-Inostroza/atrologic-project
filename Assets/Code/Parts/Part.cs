@@ -181,7 +181,7 @@ public class Part : MonoBehaviour
         return prefabID;
     }
 
-    public void DestroyRougue()
+    public void DestroyRogue()
     {
         PartCard partCard = FindPartCardByID(prefabID);
 
