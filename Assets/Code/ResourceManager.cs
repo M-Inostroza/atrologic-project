@@ -4,12 +4,12 @@ using UnityEngine;
 public class ResourceManager : MonoBehaviour
 {
     private int scrap;
-    private TMP_Text scrapCounter;
+    [SerializeField] private TMP_Text scrapCounter;
 
     private float energy;
     private int energyCap = 800;
     private int energyGain = 40;
-    private TMP_Text energyCounter;
+    [SerializeField] private TMP_Text energyCounter;
 
     public float Energy
     {
@@ -58,8 +58,22 @@ public class ResourceManager : MonoBehaviour
 
     private void Start()
     {
-        scrapCounter = GameObject.Find("Scrap counter").GetComponent<TMP_Text>();
-        energyCounter = GameObject.Find("Energy counter").GetComponent<TMP_Text>();
+        if (scrapCounter == null)
+        {
+            GameObject scrapObj = GameObject.Find("Scrap counter");
+            if (scrapObj != null)
+            {
+                scrapCounter = scrapObj.GetComponent<TMP_Text>();
+            }
+        }
+        if (energyCounter == null)
+        {
+            GameObject energyObj = GameObject.Find("Energy counter");
+            if (energyObj != null)
+            {
+                energyCounter = energyObj.GetComponent<TMP_Text>();
+            }
+        }
         LoadScrap();
         LoadEnergy();
     }

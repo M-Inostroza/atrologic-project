@@ -3,10 +3,21 @@ using UnityEngine;
 public class RobotCamera : MonoBehaviour
 {
     static private Transform target;
+    [SerializeField] private Transform initialTarget;
 
     private void Awake()
     {
-        FindRobot();
+        if (target == null)
+        {
+            if (initialTarget != null)
+            {
+                target = initialTarget;
+            }
+            else
+            {
+                FindRobot();
+            }
+        }
     }
 
     private void Update()
@@ -31,5 +42,10 @@ public class RobotCamera : MonoBehaviour
         {
             target = coreObject.transform;
         }
+    }
+
+    public static void SetTarget(Transform newTarget)
+    {
+        target = newTarget;
     }
 }

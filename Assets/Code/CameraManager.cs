@@ -30,15 +30,15 @@ public class CameraManager : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
-                dragOrigin = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                dragOrigin = mainCamera.ScreenToWorldPoint(Input.mousePosition);
             }
 
             if (Input.GetMouseButton(0))
             {
-                Vector3 difference = dragOrigin - Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                Vector3 difference = dragOrigin - mainCamera.ScreenToWorldPoint(Input.mousePosition);
                 mainCamera.transform.position += difference * dragSpeed;
 
-                dragOrigin = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                dragOrigin = mainCamera.ScreenToWorldPoint(Input.mousePosition);
             }
         }
     }

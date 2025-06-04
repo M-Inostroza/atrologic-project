@@ -17,7 +17,7 @@ public class PartCard : MonoBehaviour
     string cardID;
 
     PartData partData;
-    Workshop workshop;
+    [SerializeField] private Workshop workshop;
 
     private void Start()
     {
@@ -27,7 +27,10 @@ public class PartCard : MonoBehaviour
             deployButton.interactable = true;
         }
 
-        workshop = FindFirstObjectByType<Workshop>();
+        if (workshop == null)
+        {
+            workshop = FindFirstObjectByType<Workshop>();
+        }
 
         modifyButton.onClick.AddListener(ModifyDeployedPart);
     }

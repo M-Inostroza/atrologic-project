@@ -11,14 +11,33 @@ public class Part : MonoBehaviour
     protected bool isDragging = false;
     private Vector3 offset;
 
-    InventoryManager inventoryManager;
-    RectTransform recycleIcon;
-    Core core;
+    [SerializeField] private InventoryManager inventoryManager;
+    [SerializeField] private RectTransform recycleIcon;
+    [SerializeField] private Core core;
+    [SerializeField] private Camera mainCamera;
 
-    public void Start()
+    private void Awake()
     {
-        inventoryManager = FindFirstObjectByType<InventoryManager>();
-        core = FindFirstObjectByType<Core>();
+        if (mainCamera == null)
+        {
+            mainCamera = Camera.main;
+        }
+        if (inventoryManager == null)
+        {
+            inventoryManager = FindFirstObjectByType<InventoryManager>();
+        }
+        if (core == null)
+        {
+            core = FindFirstObjectByType<Core>();
+        }
+        if (recycleIcon == null)
+        {
+            GameObject recycleObj = GameObject.Find("Recycle");
+            if (recycleObj != null)
+            {
+                recycleIcon = recycleObj.GetComponent<RectTransform>();
+            }
+        }
 
         CheckInitialAttachment();
     }
@@ -45,9 +64,11 @@ public class Part : MonoBehaviour
 
     private bool IsOverRecycle()
     {
-        recycleIcon = GameObject.Find("Recycle").GetComponent<RectTransform>();
-        if (recycleIcon == null) return false;
-        Vector2 screenPosition = Camera.main.WorldToScreenPoint(transform.position);
+        if (recycleIcon == null)
+        {
+            return false;
+        }
+        Vector2 screenPosition = mainCamera.WorldToScreenPoint(transform.position);
         return RectTransformUtility.RectangleContainsScreenPoint(recycleIcon, screenPosition);
     }
 
@@ -167,8 +188,8 @@ public class Part : MonoBehaviour
     private Vector3 GetMouseWorldPosition()
     {
         Vector3 mousePoint = Input.mousePosition;
-        mousePoint.z = Camera.main.WorldToScreenPoint(gameObject.transform.position).z;
-        return Camera.main.ScreenToWorldPoint(mousePoint);
+        mousePoint.z = mainCamera.WorldToScreenPoint(gameObject.transform.position).z;
+        return mainCamera.ScreenToWorldPoint(mousePoint);
     }
 
     public void SetPrefabID(string id)

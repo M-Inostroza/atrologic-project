@@ -13,11 +13,14 @@ public class ShopCard : MonoBehaviour
     [SerializeField] InventoryManager inventory;
     [SerializeField] GameObject buyBtn;
 
-    ResourceManager resourceManager;
+    [SerializeField] private ResourceManager resourceManager;
 
     private void Start()
     {
-        resourceManager = FindFirstObjectByType<ResourceManager>();
+        if (resourceManager == null)
+        {
+            resourceManager = FindFirstObjectByType<ResourceManager>();
+        }
     }
 
     public void BuyPart(string partName)
