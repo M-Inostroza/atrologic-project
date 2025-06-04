@@ -1,4 +1,4 @@
-﻿#if PLAYMAKER_1_8_OR_NEWER
+#if PLAYMAKER_1_8_OR_NEWER
 
 using System.Collections;
 using System.Collections.Generic;

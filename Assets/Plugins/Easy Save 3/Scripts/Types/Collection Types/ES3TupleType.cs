@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using ES3Internal;
 
 namespace ES3Types

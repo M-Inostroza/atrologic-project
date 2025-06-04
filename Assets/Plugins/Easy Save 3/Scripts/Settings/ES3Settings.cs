@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using ES3Internal;
 #if UNITY_EDITOR
 using UnityEditor;

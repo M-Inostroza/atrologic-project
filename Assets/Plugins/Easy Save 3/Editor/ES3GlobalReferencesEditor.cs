@@ -1,4 +1,4 @@
-﻿#if !ES3GLOBAL_DISABLED
+#if !ES3GLOBAL_DISABLED
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;

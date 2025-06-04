@@ -1,4 +1,4 @@
-﻿#if PLAYMAKER_1_8_OR_NEWER
+#if PLAYMAKER_1_8_OR_NEWER
 
 using UnityEngine;
 using UnityEditor;

@@ -1,4 +1,4 @@
-﻿#if !DISABLE_ENCRYPTION
+#if !DISABLE_ENCRYPTION
 using System.IO;
 using System.Security.Cryptography;
 #if NETFX_CORE

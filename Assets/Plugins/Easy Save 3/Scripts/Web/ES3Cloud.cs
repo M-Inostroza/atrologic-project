@@ -1,4 +1,4 @@
-﻿#if !DISABLE_WEB
+#if !DISABLE_WEB
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
