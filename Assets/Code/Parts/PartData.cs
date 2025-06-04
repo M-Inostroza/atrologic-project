@@ -9,7 +9,7 @@ public class PartData
     public string attachmentPointName;
 
     public bool isDeployed;
-    public bool isAtached;
+    public bool isAttached;
     public bool isActive;
 
     public Vector3 localPosition;
@@ -24,7 +24,7 @@ public class PartData
         partType = "";
         attachmentPointName = "";
         isDeployed = false;
-        isAtached = false;
+        isAttached = false;
         isActive = false;
         localPosition = Vector3.zero;
         localRotation = Quaternion.identity;
