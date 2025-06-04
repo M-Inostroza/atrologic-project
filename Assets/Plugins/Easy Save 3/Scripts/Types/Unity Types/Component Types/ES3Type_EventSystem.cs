@@ -1,4 +1,4 @@
-﻿#if ES3_UGUI
+#if ES3_UGUI
 
 using System;
 using UnityEngine;

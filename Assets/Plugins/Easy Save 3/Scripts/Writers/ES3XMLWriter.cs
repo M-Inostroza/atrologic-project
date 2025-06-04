@@ -1,4 +1,4 @@
-﻿public class ES3XMLWriter
+public class ES3XMLWriter
 {
     // Not implemented
 }
