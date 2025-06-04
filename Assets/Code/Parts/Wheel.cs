@@ -4,8 +4,9 @@ using static UnityEngine.EventSystems.EventTrigger;
 public class Wheel : Part
 {
     private Rigidbody2D rb2D;
-    private GameManager gameManager;
-    private ResourceManager resourceManager;
+    [SerializeField] private GameManager gameManager;
+    [SerializeField] private ResourceManager resourceManager;
+    [SerializeField] private Core core;
 
     private float rotationSpeedEco = 1.2f;
     private float rotationSpeedNormal = 1.6f;
@@ -13,8 +14,18 @@ public class Wheel : Part
 
     private void Awake()
     {
-        gameManager = FindFirstObjectByType<GameManager>();
-        resourceManager = FindFirstObjectByType<ResourceManager>();
+        if (gameManager == null)
+        {
+            gameManager = FindFirstObjectByType<GameManager>();
+        }
+        if (resourceManager == null)
+        {
+            resourceManager = FindFirstObjectByType<ResourceManager>();
+        }
+        if (core == null)
+        {
+            core = FindFirstObjectByType<Core>();
+        }
     }
 
     private new void Start()
@@ -47,7 +58,10 @@ public class Wheel : Part
             // Eliminate constraints
             rb2D.constraints = RigidbodyConstraints2D.None;
 
-            Core core = FindFirstObjectByType<Core>();
+            if (core == null)
+            {
+                core = FindFirstObjectByType<Core>();
+            }
             if (core != null)
             {
                 Rigidbody2D coreRb2D = core.GetComponent<Rigidbody2D>();

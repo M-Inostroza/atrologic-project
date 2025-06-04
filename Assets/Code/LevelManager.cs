@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 public class LevelManager : MonoBehaviour
 {
     // Spawn robot
-    RobotManager robotManager;
+    [SerializeField] private RobotManager robotManager;
 
     [SerializeField] private Transform spawnPoint;
 
@@ -12,7 +12,10 @@ public class LevelManager : MonoBehaviour
     {
         if (SceneManager.GetActiveScene().name == "Level")
         {
-            robotManager = FindFirstObjectByType<RobotManager>();
+            if (robotManager == null)
+            {
+                robotManager = FindFirstObjectByType<RobotManager>();
+            }
 
             robotManager.SpawnRobot(spawnPoint);
             RobotCamera.FindRobot();
